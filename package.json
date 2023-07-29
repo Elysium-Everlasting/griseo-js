@@ -1,16 +1,24 @@
 {
-  "name": "@vitejs/monorepo",
+  "name": "@aponia/vite-monorepo",
   "version": "0.0.0",
   "description": "monorepo for vitejs - next generation frontend tooling",
+  "private": true,
+  "license": "MIT",
   "homepage": "git@github.com:ap0nia/vite.git",
-  "authors": {
-    "name": "ap0nia",
-    "email": "",
-    "url": "https://github.com/ap0nia"
-  },
+  "funding": "git@github.com:ap0nia/vite.git",
+  "contributors": [
+    {
+      "name": "ap0nia",
+      "email": "",
+      "url": "https://github.com/ap0nia"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ap0nia/vite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ap0nia/vite/issues"
   },
   "keywords": [
     "frontend",
@@ -19,7 +27,6 @@
     "build-tool",
     "vite"
   ],
-  "private": true,
   "type": "module",
   "scripts": {
     "preinstall": "npx only-allow pnpm",

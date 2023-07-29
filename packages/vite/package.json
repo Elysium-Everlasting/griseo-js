@@ -1,0 +1,44 @@
+{
+  "name": "@aponia/vite",
+  "version": "0.1.0",
+  "description": "native-ESM powered web development build tool. It's fast.",
+  "private": true,
+  "license": "MIT",
+  "homepage": "git@github.com:ap0nia/vite.git",
+  "funding": "git@github.com:ap0nia/vite.git",
+  "contributors": [
+    {
+      "name": "ap0nia",
+      "email": "",
+      "url": "https://github.com/ap0nia"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ap0nia/vite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ap0nia/vite/issues"
+  },
+  "keywords": [
+    "frontend",
+    "hmr",
+    "dev-server",
+    "build-tool",
+    "vite"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {},
+  "typesVersions": {},
+  "type": "module",
+  "scripts": {},
+  "packageManager": "pnpm@8.6.10",
+  "engines": {
+    "pnpm": "^8.0.0",
+    "node": ">=18"
+  }
+}
