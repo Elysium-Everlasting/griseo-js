@@ -5,7 +5,7 @@ jobs:
   lint-pr:
     runs-on: ubuntu-latest
     steps:
-      - uses: Namchee/conventional-pr@v0.12.1
+      - uses: Namchee/conventional-pr@v0.13.0
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
           close: false
