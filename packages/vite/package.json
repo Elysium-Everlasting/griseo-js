@@ -40,5 +40,22 @@
   "engines": {
     "pnpm": "^8.0.0",
     "node": ">=18"
+  },
+  "devDependencies": {
+    "@ampproject/remapping": "^2.2.1",
+    "@rollup/plugin-alias": "^5.0.0",
+    "@types/connect": "^3.4.35",
+    "@types/debug": "^4.1.8",
+    "chalk": "^5.3.0",
+    "chokidar": "^3.5.3",
+    "debug": "^4.3.4",
+    "esbuild": "^0.18.17",
+    "postcss": "^8.4.27",
+    "rollup": "^3.27.0"
+  },
+  "dependencies": {
+    "connect": "^3.7.0",
+    "fast-glob": "^3.3.1",
+    "lightningcss": "^1.21.5"
   }
 }
