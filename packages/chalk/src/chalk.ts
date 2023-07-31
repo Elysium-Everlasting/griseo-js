@@ -11,6 +11,9 @@ interface ChalkBuilder {
   (): Chalk
 }
 
+/**
+ * A string formatter accepts a string and returns a string decorated with ansi-colors.
+ */
 type Formatter = (text: string) => string
 
 /**
