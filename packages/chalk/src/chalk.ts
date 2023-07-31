@@ -11,10 +11,12 @@ interface ChalkBuilder {
   (): Chalk
 }
 
+type Formatter = (text: string) => string
+
 /**
  * Cached formatter functions.
  */
-const formatters = new Map<string, (text: string) => string>()
+const formatters = new Map<string, Formatter>()
 
 /**
  * Just a noop function as a placeholder for the proxy initialization.
@@ -77,7 +79,7 @@ function createChalkBuilder(root: keyof Chalk): ChalkBuilder {
  * Picocolors formatter.
  * @see https://github.com/alexeyraspopov/picocolors/blob/main/picocolors.js#L11
  */
-function createFormatter(open: string, close: string, replace = open) {
+function createFormatter(open: string, close: string, replace = open): Formatter {
   return (input: unknown) => {
     const string = '' + input
     const index = string.indexOf(close, open.length)
