@@ -19,7 +19,7 @@ const formatters = new Map<string, (text: string) => string>()
 /**
  * Just a noop function as a placeholder for the proxy initialization.
  */
-function noop() {}
+const chalkBuilder = (() => {}) as ChalkBuilder
 
 /**
  * If the first argument is a string, just format it directly.
@@ -58,7 +58,7 @@ export function createChalk(): Chalk {
 function createChalkBuilder(root: keyof Chalk): ChalkBuilder {
   const keys = [root]
 
-  const chalk: any = new Proxy(noop, {
+  const chalk: typeof chalkBuilder = new Proxy(chalkBuilder, {
     get(_target, property: keyof Chalk, receiver) {
       keys.push(property)
       return receiver
