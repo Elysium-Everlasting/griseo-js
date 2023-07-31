@@ -58,5 +58,8 @@
     "connect": "^3.7.0",
     "fast-glob": "^3.3.1",
     "lightningcss": "^1.21.5"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

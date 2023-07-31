@@ -47,5 +47,7 @@
   "devDependencies": {
     "tsx": "^3.12.7"
   },
-  "dependencies": {}
+  "publishConfig": {
+    "access": "public"
+  }
 }
