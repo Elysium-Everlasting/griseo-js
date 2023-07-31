@@ -21,6 +21,17 @@ const formatters = new Map<string, (text: string) => string>()
  */
 function noop() {}
 
+/**
+ * If the first argument is a string, just format it directly.
+ * This yields similar performance to Picocolors.
+ *
+ * If the first argument is undefined, then create a new builder.
+ * The chaining on this builder is actually faster than Kleur for some reason,
+ * but slower than Chalk because it uses a {@link Proxy}.
+ *
+ * Better chaining performance can be achieved by manipulating prototypes,
+ * but I don't think it's worth the effort.
+ */
 export function createChalk(): Chalk {
   return Object.entries(COLORS).reduce((chalk, [key, [open, close]]) => {
     const formatter = formatters.get(key) || createFormatter(`\x1b[${open}m`, `\x1b[${close}m`)
@@ -41,7 +52,10 @@ export function createChalk(): Chalk {
   }, {} as Chalk)
 }
 
-function createChalkBuilder(root: keyof Chalk) {
+/**
+ * Chainable function to stylize strings.
+ */
+function createChalkBuilder(root: keyof Chalk): ChalkBuilder {
   const keys = [root]
 
   const chalk: any = new Proxy(noop, {
@@ -59,6 +73,10 @@ function createChalkBuilder(root: keyof Chalk) {
   return chalk
 }
 
+/**
+ * Picocolors formatter.
+ * @see https://github.com/alexeyraspopov/picocolors/blob/main/picocolors.js#L11
+ */
 function createFormatter(open: string, close: string, replace = open) {
   return (input: unknown) => {
     const string = '' + input
@@ -69,6 +87,10 @@ function createFormatter(open: string, close: string, replace = open) {
   }
 }
 
+/**
+ * Picocolors replacement function.
+ * @see https://github.com/alexeyraspopov/picocolors/blob/main/picocolors.js#L21
+ */
 function replaceClose(string: string, close: string, replace: string, index: number): string {
   let start = string.substring(0, index) + replace
   let end = string.substring(index + close.length)
