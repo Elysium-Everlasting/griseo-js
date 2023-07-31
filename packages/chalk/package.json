@@ -37,7 +37,7 @@
   "typesVersions": {},
   "type": "module",
   "scripts": {
-    "dev": "tsx src/ansi-colors.ts"
+    "dev": "tsx src/index.ts"
   },
   "packageManager": "pnpm@8.6.10",
   "engines": {
@@ -46,5 +46,6 @@
   },
   "devDependencies": {
     "tsx": "^3.12.7"
-  }
+  },
+  "dependencies": {}
 }
