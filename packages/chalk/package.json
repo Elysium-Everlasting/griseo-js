@@ -2,7 +2,6 @@
   "name": "@aponia/chalk",
   "version": "0.1.0",
   "description": "terminal string styling done right",
-  "private": true,
   "license": "MIT",
   "homepage": "git@github.com:ap0nia/vite.git",
   "funding": "git@github.com:ap0nia/vite.git",

@@ -2,7 +2,6 @@
   "name": "@aponia/vite",
   "version": "0.1.0",
   "description": "native-ESM powered web development build tool",
-  "private": true,
   "license": "MIT",
   "homepage": "git@github.com:ap0nia/vite.git",
   "funding": "git@github.com:ap0nia/vite.git",
