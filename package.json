@@ -1,32 +1,26 @@
 {
-  "name": "@aponia/vite-monorepo",
+  "name": "@griseo-js/monorepo",
   "version": "0.0.0",
-  "description": "monorepo for vitejs - next generation frontend tooling",
+  "description": "monorepo for griseo-js - a collection of ui tools",
   "private": true,
   "license": "MIT",
-  "homepage": "git@github.com:ap0nia/vite",
-  "funding": "git@github.com:ap0nia/vite",
+  "homepage": "git@github.com:Elysium-Everlasting/griseo-js",
+  "funding": "git@github.com:Elysium-Everlasting/griseo-js",
   "contributors": [
     {
       "name": "ap0nia",
       "email": "",
-      "url": "https://github.com/ap0nia"
+      "url": "https://github.com/@ap0nia"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ap0nia/vite.git"
+    "url": "git+https://github.com/Elysium-Everlasting/griseo-js.git"
   },
   "bugs": {
-    "url": "https://github.com/ap0nia/vite/issues"
+    "url": "https://github.com/Elysium-Everlasting/griseo-js/issues"
   },
-  "keywords": [
-    "frontend",
-    "hmr",
-    "dev-server",
-    "build-tool",
-    "vite"
-  ],
+  "keywords": [],
   "type": "module",
   "scripts": {
     "preinstall": "npx only-allow pnpm",

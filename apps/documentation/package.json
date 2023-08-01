@@ -1,0 +1,40 @@
+{
+  "name": "@griseo-js/documentation",
+  "version": "0.0.0",
+  "description": "documentation for griseo-js - a collection of ui tools",
+  "private": true,
+  "license": "MIT",
+  "homepage": "git@github.com:Elysium-Everlasting/griseo-js",
+  "funding": "git@github.com:Elysium-Everlasting/griseo-js",
+  "contributors": [
+    {
+      "name": "ap0nia",
+      "email": "",
+      "url": "https://github.com/@ap0nia"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elysium-Everlasting/griseo-js.git",
+    "directory": "apps/documentation"
+  },
+  "bugs": {
+    "url": "https://github.com/Elysium-Everlasting/griseo-js/issues"
+  },
+  "devDependencies": {
+    "ci-info": "^3.8.0",
+    "vitepress": "1.0.0-beta.7"
+  },
+  "keywords": [],
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs"
+  },
+  "packageManager": "pnpm@8.6.11",
+  "engines": {
+    "pnpm": "^8.0.0",
+    "node": ">=18"
+  }
+}

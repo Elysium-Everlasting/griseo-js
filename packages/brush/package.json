@@ -1,10 +1,10 @@
 {
-  "name": "@aponia/chalk",
+  "name": "@griseo-js/brush",
   "version": "0.2.0",
   "description": "terminal string styling done right",
   "license": "MIT",
-  "homepage": "git@github.com:ap0nia/vite.git",
-  "funding": "git@github.com:ap0nia/vite.git",
+  "homepage": "git@github.com:Elysium-Everlasting/griseo-js",
+  "funding": "git@github.com:Elysium-Everlasting/griseo-js",
   "contributors": [
     {
       "name": "ap0nia",
@@ -14,18 +14,33 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ap0nia/vite.git",
-    "directory": "packages/chalk"
+    "url": "git+https://github.com/Elysium-Everlasting/griseo-js.git",
+    "directory": "packages/brush"
   },
   "bugs": {
-    "url": "https://github.com/ap0nia/vite/issues"
+    "url": "https://github.com/Elysium-Everlasting/griseo-js/issues"
   },
   "keywords": [
-    "frontend",
-    "hmr",
-    "dev-server",
-    "build-tool",
-    "vite"
+    "color",
+    "colour",
+    "colors",
+    "terminal",
+    "console",
+    "cli",
+    "string",
+    "ansi",
+    "style",
+    "styles",
+    "tty",
+    "formatting",
+    "rgb",
+    "256",
+    "shell",
+    "xterm",
+    "log",
+    "logging",
+    "command-line",
+    "text"
   ],
   "files": [
     "dist",
@@ -39,13 +54,13 @@
   "scripts": {
     "dev": "tsx src/index.ts"
   },
+  "devDependencies": {
+    "tsx": "^3.12.7"
+  },
   "packageManager": "pnpm@8.6.11",
   "engines": {
     "pnpm": "^8.0.0",
     "node": ">=18"
-  },
-  "devDependencies": {
-    "tsx": "^3.12.7"
   },
   "publishConfig": {
     "access": "public"
