@@ -1,6 +1,6 @@
 {
   "name": "@aponia/chalk",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "terminal string styling done right",
   "license": "MIT",
   "homepage": "git@github.com:ap0nia/vite.git",
