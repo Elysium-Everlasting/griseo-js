@@ -6,7 +6,7 @@ type Chalk = Record<keyof typeof COLORS, ChalkBuilder>
  * Chainable function that will return the formatted text if called with a string argument.
  * Otherwise, it will return the same builder instance.
  */
-interface ChalkBuilder {
+interface ChalkBuilder extends Chalk {
   (text: string): string
   (): Chalk
 }
@@ -19,7 +19,12 @@ type Formatter = (text: string) => string
 /**
  * Cached formatter functions.
  */
-const formatters = new Map<string, Formatter>()
+const formatters = new Map<string, Formatter>(
+  Object.entries(COLORS).map(([key, [open, close]]) => [
+    key,
+    createFormatter(`\x1b[${open}m`, `\x1b[${close}m`),
+  ]),
+)
 
 /**
  * Just a noop function as a placeholder for the proxy initialization.
@@ -38,20 +43,22 @@ const chalkBuilder = (() => {}) as ChalkBuilder
  * but I don't think it's worth the effort.
  */
 export function createChalk(): Chalk {
-  return Object.entries(COLORS).reduce((chalk, [key, [open, close]]) => {
-    const formatter = formatters.get(key) || createFormatter(`\x1b[${open}m`, `\x1b[${close}m`)
-
-    if (!formatters.get(key)) {
-      formatters.set(key, formatter)
-    }
-
-    chalk[key as keyof Chalk] = ((text) => {
+  return Object.entries(COLORS).reduce((chalk, [key]) => {
+    const handler = ((text) => {
       if (text) {
-        return formatter(text)
+        return formatters.get(key)?.(text)
       } else {
         return createChalkBuilder(key as keyof Chalk)
       }
     }) as ChalkBuilder
+
+    chalk[key as keyof Chalk] = handler
+
+    Object.defineProperty(chalk, key, {
+      get() {
+        return createChalkBuilder(key as keyof Chalk)
+      },
+    })
 
     return chalk
   }, {} as Chalk)
