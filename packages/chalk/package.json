@@ -28,7 +28,8 @@
     "vite"
   ],
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -48,5 +49,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0"
   }
 }
