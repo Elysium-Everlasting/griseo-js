@@ -1,6 +1,6 @@
 {
   "name": "@aponia/chalk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "terminal string styling done right",
   "private": true,
   "license": "MIT",
