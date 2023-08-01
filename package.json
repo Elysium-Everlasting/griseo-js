@@ -4,8 +4,8 @@
   "description": "monorepo for vitejs - next generation frontend tooling",
   "private": true,
   "license": "MIT",
-  "homepage": "git@github.com:ap0nia/vite.git",
-  "funding": "git@github.com:ap0nia/vite.git",
+  "homepage": "git@github.com:ap0nia/vite",
+  "funding": "git@github.com:ap0nia/vite",
   "contributors": [
     {
       "name": "ap0nia",
