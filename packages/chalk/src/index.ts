@@ -9,3 +9,5 @@ const chalk = createChalk({ level: 3 })
 console.log(
   chalk.rgb(169, 42, 69).bgRgb(69, 42, 169).italic.bold.underline.overline('HELLO, WORLD!'),
 )
+
+console.log(chalk.hex('#BF3636').bgHex('#F2D399').italic.bold.underline.overline('HELLO, WORLD!'))
