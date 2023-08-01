@@ -2,7 +2,7 @@ import ci from 'ci-info'
 import { defineConfig, type DefaultTheme } from 'vitepress'
 import { repository } from '../../package.json'
 
-const repositoryName = repository.url.split('/').pop() ?? ''
+const gitRepository = repository.url.split('/').pop() ?? ''
 
 /**
  * @see https://vitepress.dev/reference/default-theme-config
@@ -36,5 +36,5 @@ export default defineConfig({
 
   themeConfig: defaultTheme,
 
-  base: ci.GITHUB_ACTIONS ? `/${repositoryName.replace('.git', '')}/` : '',
+  base: ci.GITHUB_ACTIONS ? `/${gitRepository.replace('.git', '')}/` : '',
 })
