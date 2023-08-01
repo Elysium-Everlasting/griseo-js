@@ -1,23 +1,30 @@
 {
-  "name": "vuepress",
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "type": "module",
-  "authors": {
-    "name": "",
-    "email": ""
-  },
+  "name": "@griseo-js/vuepress-documentation",
+  "version": "0.0.0",
+  "description": "documentation for griseo-js - a collection of ui tools",
+  "private": true,
+  "license": "MIT",
+  "homepage": "git@github.com:Elysium-Everlasting/griseo-js",
+  "funding": "git@github.com:Elysium-Everlasting/griseo-js",
+  "contributors": [
+    {
+      "name": "ap0nia",
+      "email": "",
+      "url": "https://github.com/@ap0nia"
+    }
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Elysium-Everlasting/griseo-js.git",
+    "url": "https://github.com/Elysium-Everlasting/griseo-js.git",
     "directory": "apps/vuepress"
+  },
+  "bugs": {
+    "url": "https://github.com/Elysium-Everlasting/griseo-js/issues"
   },
   "scripts": {
     "dev": "vuepress dev src",
     "build": "vuepress build src"
   },
-  "license": "MIT",
   "devDependencies": {
     "@vuepress/client": "2.0.0-beta.66",
     "ci-info": "^3.8.0",

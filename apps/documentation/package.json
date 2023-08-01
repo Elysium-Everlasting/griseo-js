@@ -15,15 +15,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Elysium-Everlasting/griseo-js.git",
+    "url": "https://github.com/Elysium-Everlasting/griseo-js.git",
     "directory": "apps/documentation"
   },
   "bugs": {
     "url": "https://github.com/Elysium-Everlasting/griseo-js/issues"
-  },
-  "devDependencies": {
-    "ci-info": "^3.8.0",
-    "vitepress": "1.0.0-beta.7"
   },
   "keywords": [],
   "type": "module",
@@ -31,6 +27,10 @@
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
     "preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "ci-info": "^3.8.0",
+    "vitepress": "1.0.0-beta.7"
   },
   "packageManager": "pnpm@8.6.11",
   "engines": {
