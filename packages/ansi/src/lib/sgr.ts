@@ -144,17 +144,10 @@ export type SgrCode = SgrParameters[SgrParameterName]
 
 /**
  * A color pair describes the opening and closing SGR parameters for a colored string.
- *
- * The numbers are loosely autocompleted; any number is valid, and defined ones are autocompleted.
  */
-export type ColorPair = [SgrCode | AutocompleteNumber, SgrCode | AutocompleteNumber]
+type ColorPair = [SgrCode, SgrCode]
 
 /**
  * A color mapping describes the SGR parameters for a color name.
  */
-export type ColorMapping = Record<string, ColorPair>
-
-/**
- * When this is in a union, it will allow the original types to be inferred.
- */
-type AutocompleteNumber = number & NonNullable<unknown>
+type ColorMapping = Record<string, ColorPair>

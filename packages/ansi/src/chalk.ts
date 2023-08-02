@@ -12,15 +12,13 @@ import {
   type RgbColor,
   type ColorType,
 } from './lib/ansi.js'
+import { createFormatter, type Formatter } from './utils/string-formatter.js'
 
 /**
  * The premiere Chalk API.
  */
 type Chalk = Metadata & ChalkBuilder & TrueColorBuilders & Metadata
 
-/**
- * Top level properties on the Chalk instance.
- */
 interface Metadata {
   level: ColorSupportLevel
 }
@@ -58,15 +56,7 @@ interface TrueColorFormatters {
   bgAnsi256(code: number): Formatter
 }
 
-/**
- * Just a noop function used as a placeholder for the proxy initialization.
- */
-const chalkBuilder = (() => {}) as ChalkBuilder
-
-/**
- * Translates a {@link ColorSupportLevel} to a {@link ColorType}.
- */
-const levelToColorType = {
+const levelToAnsi = {
   0: 'ansi',
   1: 'ansi',
   2: 'ansi256',
@@ -74,14 +64,7 @@ const levelToColorType = {
 } as const satisfies Record<ColorSupportLevel, ColorType>
 
 /**
- * A string formatter accepts a string and returns a string decorated with ansi-colors.
- */
-type Formatter = (text: string) => string
-
-/**
  * Cached formatter functions.
- * All fixed colors can be initially cached.
- * Dynamically created ones, i.e. true-color formatters, are cached on first use.
  */
 const formatters = new Map<string, Formatter>(
   Object.entries(COLORS).map(([key, [open, close]]) => [
@@ -91,33 +74,10 @@ const formatters = new Map<string, Formatter>(
 )
 
 /**
- * ansi-colors formatter. Apparently this is the superior and least buggy implementation :)
- * @see https://github.com/doowb/ansi-colors/blob/master/index.js#L24
- */
-function createFormatter(
-  open: string,
-  close: string,
-  replace = new RegExp(`\\u001b\\[${close}m`, 'g'),
-): Formatter {
-  return (rawInput: string, newline?: boolean) => {
-    const input = rawInput.includes(close) ? rawInput.replace(replace, close + open) : rawInput
-
-    const output = open + input + close
-
-    /**
-     * @see https://github.com/chalk/chalk/pull/92
-     * Thanks to the chalk contributors for this fix.
-     * However, we've confirmed that this issue is also present in Windows terminals
-     */
-    return newline ? output.replace(/\r*\n/g, `${close}$&${open}`) : output
-  }
-}
-
-/**
- * Extension of the simple formatters to create true-color formatters.
+ * Extension of the simple formatters to create a true-color formatter.
  */
 function createTrueColorFormatters(options: Options): TrueColorFormatters {
-  const level = levelToColorType[options.level ?? 0]
+  const level = levelToAnsi[options.level ?? 0]
 
   const reset = `\x1b[${COLORS.reset[0]}m`
 
@@ -157,6 +117,11 @@ function createTrueColorFormatters(options: Options): TrueColorFormatters {
   }
 }
 
+/**
+ * Just a noop function as a placeholder for the proxy initialization.
+ */
+const chalkBuilder = (() => {}) as ChalkBuilder
+
 export interface Options {
   /**
    * Specify the color support for Chalk.
@@ -165,7 +130,7 @@ export interface Options {
    *  - `0` - All colors disabled.
    *  - `1` - Basic 16 colors support.
    *  - `2` - ANSI 256 colors support.
-   *  - `3` - True color 16 million colors support.
+   *  - `3` - Truecolor 16 million colors support.
    */
   level?: ColorSupportLevel
 }

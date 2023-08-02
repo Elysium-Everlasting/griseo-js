@@ -1,0 +1,68 @@
+{
+  "name": "@griseo-js/ansi",
+  "version": "0.2.0",
+  "description": "terminal string styling done right",
+  "license": "MIT",
+  "homepage": "git@github.com:Elysium-Everlasting/griseo-js",
+  "funding": "git@github.com:Elysium-Everlasting/griseo-js",
+  "contributors": [
+    {
+      "name": "ap0nia",
+      "email": "",
+      "url": "https://github.com/ap0nia"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Elysium-Everlasting/griseo-js.git",
+    "directory": "packages/brush"
+  },
+  "bugs": {
+    "url": "https://github.com/Elysium-Everlasting/griseo-js/issues"
+  },
+  "keywords": [
+    "color",
+    "colour",
+    "colors",
+    "terminal",
+    "console",
+    "cli",
+    "string",
+    "ansi",
+    "style",
+    "styles",
+    "tty",
+    "formatting",
+    "rgb",
+    "256",
+    "shell",
+    "xterm",
+    "log",
+    "logging",
+    "command-line",
+    "text"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {},
+  "typesVersions": {},
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts"
+  },
+  "devDependencies": {
+    "tsx": "^3.12.7"
+  },
+  "packageManager": "pnpm@8.6.11",
+  "engines": {
+    "pnpm": "^8.0.0",
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
