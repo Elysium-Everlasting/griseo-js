@@ -1,5 +1,11 @@
 # @aponia/chalk
 
+## 0.3.0
+
+### Minor Changes
+
+- 9b9cb59: feat: new repository
+
 ## 0.2.0
 
 ### Minor Changes
