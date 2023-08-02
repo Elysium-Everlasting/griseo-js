@@ -212,3 +212,5 @@ export const stderr = createColorSupport({ isTTY: tty.isatty(2) })
 export const supportsColor = { stdout, stderr }
 
 export default supportsColor
+
+export * from './index.js'

@@ -33,3 +33,5 @@ export const supportsColor = {
 }
 
 export default supportsColor
+
+export * from './index.js'

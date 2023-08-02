@@ -48,13 +48,54 @@
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "exports": {},
-  "typesVersions": {},
+  "exports": {
+    "./ansi": {
+      "types": "./dist/ansi.d.ts",
+      "import": "./dist/ansi.js",
+      "require": "./dist/ansi.cjs",
+      "default": "./dist/ansi.js"
+    },
+    "./sgr": {
+      "types": "./dist/sgr.d.ts",
+      "import": "./dist/sgr.js",
+      "require": "./dist/sgr.cjs",
+      "default": "./dist/sgr.js"
+    },
+    "./color-support/node": {
+      "types": "./dist/color-support/node.d.ts",
+      "import": "./dist/color-support/node.js",
+      "require": "./dist/color-support/node.cjs",
+      "default": "./dist/color-support/node.js"
+    },
+    "./color-support/browser": {
+      "types": "./dist/color-support/browser.d.ts",
+      "import": "./dist/color-support/browser.js",
+      "require": "./dist/color-support/browser.cjs",
+      "default": "./dist/color-support/browser.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "ansi": [
+        "./dist/ansi.d.ts"
+      ],
+      "sgr": [
+        "./dist/sgr.d.ts"
+      ],
+      "color-support/node": [
+        "./dist/color-support/node.d.ts"
+      ],
+      "color-support/browser": [
+        "./dist/color-support/browser.d.ts"
+      ]
+    }
+  },
   "type": "module",
   "scripts": {
-    "dev": "tsx src/index.ts"
+    "build": "tsup"
   },
   "devDependencies": {
+    "tsup": "^7.1.0",
     "tsx": "^3.12.7"
   },
   "packageManager": "pnpm@8.6.11",
