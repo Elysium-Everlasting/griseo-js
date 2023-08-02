@@ -1,9 +1,11 @@
-import { COLORS } from './lib/sgr.js'
+import { COLORS } from '@griseo-js/easel/sgr'
+
 import {
   stderr as stderrColor,
   stdout as stdoutColor,
   type ColorSupportLevel,
-} from './lib/color-support.js'
+} from '@griseo-js/easel/color-support/node'
+
 import {
   wrappers,
   hexToRgb,
@@ -11,7 +13,7 @@ import {
   rgbToAnsi256,
   type RgbColor,
   type ColorType,
-} from './lib/ansi.js'
+} from '@griseo-js/easel/ansi'
 
 /**
  * The premiere Chalk API.
@@ -86,7 +88,7 @@ type Formatter = (text: string) => string
 const formatters = new Map<string, Formatter>(
   Object.entries(COLORS).map(([key, [open, close]]) => [
     key,
-    createFormatter(`\x1b[${open}m`, `\x1b[${close}m`),
+    createFormatter(`\x1b[${open}m`, `\x1b[${close}m`, new RegExp(`\\u001b\\[${close}m`, 'g')),
   ]),
 )
 
@@ -94,11 +96,7 @@ const formatters = new Map<string, Formatter>(
  * ansi-colors formatter. Apparently this is the superior and least buggy implementation :)
  * @see https://github.com/doowb/ansi-colors/blob/master/index.js#L24
  */
-function createFormatter(
-  open: string,
-  close: string,
-  replace = new RegExp(`\\u001b\\[${close}m`, 'g'),
-): Formatter {
+function createFormatter(open: string, close: string, replace: string | RegExp = close): Formatter {
   return (rawInput: string, newline?: boolean) => {
     const input = rawInput.includes(close) ? rawInput.replace(replace, close + open) : rawInput
 
@@ -121,25 +119,27 @@ function createTrueColorFormatters(options: Options): TrueColorFormatters {
 
   const reset = `\x1b[${COLORS.reset[0]}m`
 
+  const replace = new RegExp(`\\u001b\\[${COLORS.reset[0]}m`, 'g')
+
   return {
     rgb(...rgb) {
       switch (level) {
         case 'ansi':
-          return createFormatter(wrappers.color[level](rgbToAnsi(...rgb)), reset)
+          return createFormatter(wrappers.color[level](rgbToAnsi(...rgb)), reset, replace)
         case 'ansi256':
-          return createFormatter(wrappers.color[level](rgbToAnsi256(...rgb)), reset)
+          return createFormatter(wrappers.color[level](rgbToAnsi256(...rgb)), reset, replace)
         case 'ansi16m':
-          return createFormatter(wrappers.color[level](...rgb), reset)
+          return createFormatter(wrappers.color[level](...rgb), reset, replace)
       }
     },
     bgRgb(...rgb) {
       switch (level) {
         case 'ansi':
-          return createFormatter(wrappers.bgColor[level](rgbToAnsi(...rgb)), reset)
+          return createFormatter(wrappers.bgColor[level](rgbToAnsi(...rgb)), reset, replace)
         case 'ansi256':
-          return createFormatter(wrappers.bgColor[level](rgbToAnsi256(...rgb)), reset)
+          return createFormatter(wrappers.bgColor[level](rgbToAnsi256(...rgb)), reset, replace)
         case 'ansi16m':
-          return createFormatter(wrappers.bgColor[level](...rgb), reset)
+          return createFormatter(wrappers.bgColor[level](...rgb), reset, replace)
       }
     },
     hex(hex) {

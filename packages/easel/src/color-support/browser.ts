@@ -27,6 +27,10 @@ const colorSupport: false | ColorSupport = level !== 0 && {
   has16m: level >= 3,
 }
 
+export const stdout = colorSupport
+
+export const stderr = colorSupport
+
 export const supportsColor = {
   stdout: colorSupport,
   stderr: colorSupport,

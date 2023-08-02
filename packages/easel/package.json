@@ -1,7 +1,7 @@
 {
   "name": "@griseo-js/easel",
   "version": "0.2.0",
-  "description": "an easel for griseo to paint with!",
+  "description": "an easel for griseo to paint with 🎨",
   "license": "MIT",
   "homepage": "git@github.com:Elysium-Everlasting/griseo-js",
   "funding": "git@github.com:Elysium-Everlasting/griseo-js",
@@ -22,24 +22,14 @@
   },
   "keywords": [
     "color",
-    "colour",
-    "colors",
     "terminal",
     "console",
     "cli",
     "string",
     "ansi",
     "style",
-    "styles",
-    "tty",
     "formatting",
     "rgb",
-    "256",
-    "shell",
-    "xterm",
-    "log",
-    "logging",
-    "command-line",
     "text"
   ],
   "files": [
@@ -59,17 +49,11 @@
       "require": "./dist/sgr.cjs",
       "default": "./dist/sgr.js"
     },
-    "./color-support/node": {
-      "types": "./dist/color-support/node.d.ts",
-      "import": "./dist/color-support/node.js",
-      "require": "./dist/color-support/node.cjs",
-      "default": "./dist/color-support/node.js"
-    },
-    "./color-support/browser": {
-      "types": "./dist/color-support/browser.d.ts",
-      "import": "./dist/color-support/browser.js",
-      "require": "./dist/color-support/browser.cjs",
-      "default": "./dist/color-support/browser.js"
+    "./color-support/*": {
+      "types": "./dist/color-support/*.d.ts",
+      "import": "./dist/color-support/*.js",
+      "require": "./dist/color-support/*.cjs",
+      "default": "./dist/color-support/*.js"
     }
   },
   "typesVersions": {
@@ -80,11 +64,8 @@
       "sgr": [
         "./dist/sgr.d.ts"
       ],
-      "color-support/node": [
-        "./dist/color-support/node.d.ts"
-      ],
-      "color-support/browser": [
-        "./dist/color-support/browser.d.ts"
+      "color-support/*": [
+        "./dist/color-support/*.d.ts"
       ]
     }
   },

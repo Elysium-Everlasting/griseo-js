@@ -87,7 +87,14 @@ importers:
         version: 2.0.0-beta.66(@types/node@20.4.5)(@vuepress/client@2.0.0-beta.66)(ts-node@10.9.1)(vue@3.3.4)
 
   packages/brush:
+    dependencies:
+      '@griseo-js/easel':
+        specifier: workspace:*
+        version: link:../easel
     devDependencies:
+      tsup:
+        specifier: ^7.1.0
+        version: 7.1.0(ts-node@10.9.1)(typescript@5.1.6)
       tsx:
         specifier: ^3.12.7
         version: 3.12.7

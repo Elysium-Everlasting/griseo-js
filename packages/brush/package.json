@@ -1,7 +1,7 @@
 {
   "name": "@griseo-js/brush",
   "version": "0.2.0",
-  "description": "terminal string styling done right",
+  "description": "use griseo's brush to paint the terminal 🖌️",
   "license": "MIT",
   "homepage": "git@github.com:Elysium-Everlasting/griseo-js",
   "funding": "git@github.com:Elysium-Everlasting/griseo-js",
@@ -21,25 +21,17 @@
     "url": "https://github.com/Elysium-Everlasting/griseo-js/issues"
   },
   "keywords": [
-    "color",
-    "colour",
     "colors",
     "terminal",
     "console",
     "cli",
     "string",
     "ansi",
-    "style",
     "styles",
     "tty",
     "formatting",
     "rgb",
-    "256",
     "shell",
-    "xterm",
-    "log",
-    "logging",
-    "command-line",
     "text"
   ],
   "files": [
@@ -48,14 +40,48 @@
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "exports": {},
-  "typesVersions": {},
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.js",
+      "require": "./dist/node.cjs",
+      "default": "./dist/node.js"
+    },
+    "./browser": {
+      "types": "./dist/browser.d.ts",
+      "import": "./dist/browser.js",
+      "require": "./dist/browser.cjs",
+      "default": "./dist/browser.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "ansi": [
+        "./dist/ansi.d.ts"
+      ],
+      "sgr": [
+        "./dist/sgr.d.ts"
+      ],
+      "color-support/*": [
+        "./dist/color-support/*.d.ts"
+      ]
+    }
+  },
   "type": "module",
   "scripts": {
-    "dev": "tsx src/index.ts"
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@griseo-js/easel": "workspace:*"
   },
   "devDependencies": {
-    "tsx": "^3.12.7"
+    "tsup": "^7.1.0"
   },
   "packageManager": "pnpm@8.6.11",
   "engines": {
