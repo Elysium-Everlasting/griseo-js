@@ -71,7 +71,7 @@ importers:
         specifier: ^0.33.0
         version: 0.33.0
 
-  apps/documentation:
+  documentation:
     devDependencies:
       '@vuepress/client':
         specifier: 2.0.0-beta.66
