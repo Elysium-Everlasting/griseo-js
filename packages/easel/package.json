@@ -46,8 +46,6 @@
     "dist",
     "src"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "exports": {
     "./ansi": {
       "types": "./dist/ansi.d.ts",
@@ -95,8 +93,7 @@
     "build": "tsup"
   },
   "devDependencies": {
-    "tsup": "^7.1.0",
-    "tsx": "^3.12.7"
+    "tsup": "^7.1.0"
   },
   "packageManager": "pnpm@8.6.11",
   "engines": {
