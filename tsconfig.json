@@ -26,7 +26,6 @@
     "verbatimModuleSyntax": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "preserveSymlinks": true,
     "forceConsistentCasingInFileNames": true,
 
     "strict": true,

@@ -1,4 +1,4 @@
-import { COLORS } from '@griseo-js/easel/sgr'
+import { COLORS, SGR_PARAMETERS } from '@griseo-js/easel/sgr'
 
 import {
   stderr as stderrColor,
@@ -18,28 +18,32 @@ import {
 /**
  * The premiere Chalk API.
  */
-type Chalk = Metadata & ChalkBuilder & TrueColorBuilders & Metadata
+export type Chalk = Metadata & ChalkBuilder & TrueColorBuilders & Metadata
 
 /**
  * Top level properties on the Chalk instance.
  */
-interface Metadata {
+export interface Metadata {
   level: ColorSupportLevel
+  truecolor: TrueColorFormatters
 }
 
 /**
  * Chainable function that will return the formatted text if called with a string argument.
  * Otherwise, it will return the same builder instance.
  */
-interface ChalkBuilder extends Record<keyof typeof COLORS, ChalkBuilder>, TrueColorBuilders {
-  (text: string): string
+export interface ChalkBuilder
+  extends Record<keyof typeof COLORS, ChalkBuilder>,
+    TrueColorBuilders,
+    Metadata {
+  (...text: unknown[]): string
   (): Chalk
 }
 
 /**
  * True color functions that return a ChalkBuilder instance.
  */
-interface TrueColorBuilders {
+export interface TrueColorBuilders {
   rgb(...rgb: RgbColor): ChalkBuilder
   bgRgb(...rgb: RgbColor): ChalkBuilder
   hex(hex: string): ChalkBuilder
@@ -51,7 +55,7 @@ interface TrueColorBuilders {
 /**
  * Functions that create formatters with true color support.
  */
-interface TrueColorFormatters {
+export interface TrueColorFormatters {
   rgb(...rgb: RgbColor): Formatter
   bgRgb(...rgb: RgbColor): Formatter
   hex(hex: number): Formatter
@@ -68,7 +72,7 @@ const chalkBuilder = (() => {}) as ChalkBuilder
 /**
  * Translates a {@link ColorSupportLevel} to a {@link ColorType}.
  */
-const levelToColorType = {
+export const levelToColorType = {
   0: 'ansi',
   1: 'ansi',
   2: 'ansi256',
@@ -78,14 +82,14 @@ const levelToColorType = {
 /**
  * A string formatter accepts a string and returns a string decorated with ansi-colors.
  */
-type Formatter = (text: string) => string
+export type Formatter = (text: string, newline: boolean, chalk: Chalk) => string
 
 /**
  * Cached formatter functions.
  * All fixed colors can be initially cached.
  * Dynamically created ones, i.e. true-color formatters, are cached on first use.
  */
-const formatters = new Map<string, Formatter>(
+export const formatters = new Map<string, Formatter>(
   Object.entries(COLORS).map(([key, [open, close]]) => [
     key,
     createFormatter(`\x1b[${open}m`, `\x1b[${close}m`, new RegExp(`\\u001b\\[${close}m`, 'g')),
@@ -97,7 +101,11 @@ const formatters = new Map<string, Formatter>(
  * @see https://github.com/doowb/ansi-colors/blob/master/index.js#L24
  */
 function createFormatter(open: string, close: string, replace: string | RegExp = close): Formatter {
-  return (rawInput: string, newline?: boolean) => {
+  return (rawInput, newline, chalk) => {
+    if ((chalk.level != null && chalk.level <= 0) || !rawInput) {
+      return rawInput
+    }
+
     const input = rawInput.includes(close) ? rawInput.replace(replace, close + open) : rawInput
 
     const output = open + input + close
@@ -115,31 +123,33 @@ function createFormatter(open: string, close: string, replace: string | RegExp =
  * Extension of the simple formatters to create true-color formatters.
  */
 function createTrueColorFormatters(options: Options): TrueColorFormatters {
-  const level = levelToColorType[options.level ?? 0]
+  const resetFg = `\x1b[${SGR_PARAMETERS.FG_DEFAULT}m`
+  const resetBg = `\x1b[${SGR_PARAMETERS.BG_DEFAULT}m`
 
-  const reset = `\x1b[${COLORS.reset[0]}m`
-
-  const replace = new RegExp(`\\u001b\\[${COLORS.reset[0]}m`, 'g')
+  const fgDefault = new RegExp(`\\u001b\\[${SGR_PARAMETERS.FG_DEFAULT}m`, 'g')
+  const bgDefault = new RegExp(`\\u001b\\[${SGR_PARAMETERS.RESET}m`, 'g')
 
   return {
     rgb(...rgb) {
+      const level = levelToColorType[options.level ?? 0]
       switch (level) {
         case 'ansi':
-          return createFormatter(wrappers.color[level](rgbToAnsi(...rgb)), reset, replace)
+          return createFormatter(wrappers.color[level](rgbToAnsi(...rgb)), resetFg, fgDefault)
         case 'ansi256':
-          return createFormatter(wrappers.color[level](rgbToAnsi256(...rgb)), reset, replace)
+          return createFormatter(wrappers.color[level](rgbToAnsi256(...rgb)), resetFg, fgDefault)
         case 'ansi16m':
-          return createFormatter(wrappers.color[level](...rgb), reset, replace)
+          return createFormatter(wrappers.color[level](...rgb), resetFg, fgDefault)
       }
     },
     bgRgb(...rgb) {
+      const level = levelToColorType[options.level ?? 0]
       switch (level) {
         case 'ansi':
-          return createFormatter(wrappers.bgColor[level](rgbToAnsi(...rgb)), reset, replace)
+          return createFormatter(wrappers.bgColor[level](rgbToAnsi(...rgb)), resetBg, bgDefault)
         case 'ansi256':
-          return createFormatter(wrappers.bgColor[level](rgbToAnsi256(...rgb)), reset, replace)
+          return createFormatter(wrappers.bgColor[level](rgbToAnsi256(...rgb)), resetBg, bgDefault)
         case 'ansi16m':
-          return createFormatter(wrappers.bgColor[level](...rgb), reset, replace)
+          return createFormatter(wrappers.bgColor[level](...rgb), resetBg, bgDefault)
       }
     },
     hex(hex) {
@@ -149,10 +159,10 @@ function createTrueColorFormatters(options: Options): TrueColorFormatters {
       return this.bgRgb(...hexToRgb(hex))
     },
     ansi256(code) {
-      return createFormatter(wrappers.color.ansi256(code), reset)
+      return createFormatter(wrappers.color.ansi256(code), resetFg)
     },
     bgAnsi256(code) {
-      return createFormatter(wrappers.bgColor.ansi256(code), reset)
+      return createFormatter(wrappers.bgColor.ansi256(code), resetBg)
     },
   }
 }
@@ -182,44 +192,39 @@ export interface Options {
  * but I don't think it's worth the effort.
  */
 export function createChalk(options: Options = {}): Chalk {
-  const trueColorFormatters = createTrueColorFormatters(options)
+  if (
+    options.level &&
+    !(Number.isInteger(options.level) && options.level >= 0 && options.level <= 3)
+  ) {
+    throw new Error('The `level` option should be an integer from 0 to 3')
+  }
 
-  const chalk = Object.entries(COLORS).reduce((currentChalk, [key]) => {
-    const currentChalkBuilder = createChalkBuilder(
-      key as keyof ChalkBuilder,
-      options,
-      trueColorFormatters,
-    )
+  const chalk = ((...text: unknown[]) => text.join(' ')) as Chalk
 
-    currentChalk[key as keyof ChalkBuilder] = ((text) => {
-      if (text) {
-        return formatters.get(key)?.(text)
-      } else {
-        return currentChalkBuilder
-      }
-    }) as ChalkBuilder
+  chalk.level = options.level != null ? options.level : stdoutColor ? stdoutColor.level : 0
+  chalk.truecolor = createTrueColorFormatters(chalk)
 
-    Object.defineProperty(currentChalk, key, { get: currentChalkBuilder })
+  Object.assign(chalk, chalk.truecolor)
 
-    return currentChalk
-  }, {} as Chalk)
-
-  Object.assign(chalk, trueColorFormatters)
+  Object.entries(COLORS).forEach(([key]) => {
+    Object.defineProperty(chalk, key, {
+      get: () => createChalkBuilder(key as keyof ChalkBuilder, chalk),
+    })
+  })
 
   // Append the true color formatters to the root chalk instance.
-  Object.entries(trueColorFormatters).forEach(([key, formatter]) => {
+  Object.entries(chalk.truecolor).forEach(([key, formatter]) => {
     Object.defineProperty(chalk, key, {
-      get: ((text) => {
+      get: ((...args: unknown[]) => {
+        const text = args.length === 1 ? '' + args[0] : args.join(' ')
         if (text) {
-          return formatter(text)
+          return formatter(text, text.includes('\n'), chalk)
         } else {
-          return createChalkBuilder(key as keyof ChalkBuilder, options, trueColorFormatters)
+          return createChalkBuilder(key as keyof ChalkBuilder, chalk)
         }
       }) as ChalkBuilder,
     })
   })
-
-  chalk.level = options.level != null ? options.level : stdoutColor ? stdoutColor.level : 0
 
   return chalk
 }
@@ -227,24 +232,28 @@ export function createChalk(options: Options = {}): Chalk {
 /**
  * Directly create a chainable function to stylize strings.
  */
-export function createChalkBuilder(
-  root: keyof ChalkBuilder,
-  options: Options = {},
-  trueColorFormatters = createTrueColorFormatters(options),
-): ChalkBuilder {
+export function createChalkBuilder(root: keyof ChalkBuilder, chalk: Chalk): ChalkBuilder {
   const keys = [root]
 
-  const chalk: typeof chalkBuilder = new Proxy(chalkBuilder, {
-    get(_target, property: keyof ChalkBuilder, receiver) {
-      keys.push(property)
-      return receiver
+  const innerChalkBuilder: typeof chalkBuilder = new Proxy(chalkBuilder, {
+    get(_target, property: keyof Chalk, receiver) {
+      if (property === 'level') {
+        return chalk[property]
+      } else {
+        keys.push(property as keyof ChalkBuilder)
+        return receiver
+      }
+    },
+    set(_target, p, newValue, _receiver) {
+      chalk[p as keyof Chalk] = newValue
+      return true
     },
 
     apply(_target, _thisArg, argArray) {
       // If the chained function was called with no args, then always return the instance.
 
       if (!argArray.length) {
-        return chalk
+        return innerChalkBuilder
       }
 
       // If the chained function was called with some args, the following are possible:
@@ -257,33 +266,38 @@ export function createChalkBuilder(
       //  1. Replace the last key with a new key representing the true-color formatter function.
       //  2. Add this formatter function to the cache if needed.
       //  3. Return the chalk instance.
-      if (lastKey && lastKey in trueColorFormatters) {
+      if (lastKey && lastKey in chalk.truecolor) {
         keys.pop()
 
         /**
          * @example `rgb(255, 255, 255)`
          */
-        const trueColorKey = `${lastKey}(${argArray})`
+        const trueColorKey = `${lastKey}(${argArray}) - level ${chalk.level}`
 
         keys.push(trueColorKey as keyof ChalkBuilder)
 
         if (!formatters.get(trueColorKey)) {
-          formatters.set(trueColorKey, (trueColorFormatters as any)[lastKey](...argArray))
+          formatters.set(trueColorKey, (chalk.truecolor as any)[lastKey](...argArray, chalk))
         }
 
-        return chalk
+        return innerChalkBuilder
       }
+
+      const text = argArray.length === 1 ? '' + argArray[0] : argArray.join(' ')
+      const newline = text.includes('\n')
 
       /**
        * If no string to format, or {@link Options.level} is too low, just return the unformatted string.
        */
-      return !argArray[0] ?? (options.level && options.level <= 0)
+      return argArray[0] == null || (chalk.level && chalk.level <= 0)
         ? argArray[0]
-        : keys.reduce((string, key) => formatters.get(key)?.(string) ?? string, argArray[0])
+        : keys
+            .reverse()
+            .reduce((string, key) => formatters.get(key)?.(string, newline, chalk) ?? string, text)
     },
   })
 
-  return chalk
+  return innerChalkBuilder
 }
 
 export const chalk = createChalk()
