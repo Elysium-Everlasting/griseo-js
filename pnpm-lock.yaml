@@ -72,10 +72,6 @@ importers:
         version: 0.33.0
 
   documentation:
-    dependencies:
-      '@griseo-js/easel':
-        specifier: workspace:^
-        version: link:../packages/easel
     devDependencies:
       '@vuepress/client':
         specifier: 2.0.0-beta.66
