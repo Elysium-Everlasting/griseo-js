@@ -145,9 +145,9 @@ export type SgrCode = SgrParameters[SgrParameterName]
 /**
  * A color pair describes the opening and closing SGR parameters for a colored string.
  */
-type ColorPair = [SgrCode, SgrCode]
+export type ColorPair = [SgrCode, SgrCode]
 
 /**
  * A color mapping describes the SGR parameters for a color name.
  */
-type ColorMapping = Record<string, ColorPair>
+export type ColorMapping = Record<string, ColorPair>

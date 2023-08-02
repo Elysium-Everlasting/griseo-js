@@ -1,8 +1,9 @@
 import process from 'node:process'
 import os from 'node:os'
 import tty from 'node:tty'
+import type { ColorSupport, ColorSupportLevel } from './index.js'
 
-const ciVendors = ['TRAVIS', 'CIRCLECI', 'APPVEYOR', 'GITLAB_CI', 'BUILDKITE', 'DRONE']
+const CI_VENDORS = ['TRAVIS', 'CIRCLECI', 'APPVEYOR', 'GITLAB_CI', 'BUILDKITE', 'DRONE']
 
 const enableColorFlags = ['no-color', 'no-colors', 'color=false', 'color=never']
 const disableColorFlags = ['color', 'colors', 'color=true', 'color=always']
@@ -12,13 +13,11 @@ let flagForceColor: ColorSupportLevel | undefined = disableColorFlags.some((flag
   : enableColorFlags.some((flag) => hasFlag(flag))
   ? 1
   : undefined
+
 /**
  * @see https://github.com/sindresorhus/has-flag/blob/main/index.js#L3
  */
-function hasFlag(
-  flag: string,
-  argv = globalThis.Deno ? globalThis.Deno.args : process.argv,
-): boolean {
+function hasFlag(flag: string, argv = process.argv): boolean {
   const prefix = flag.startsWith('-') ? '' : flag.length === 1 ? '-' : '--'
   const position = argv.indexOf(prefix + flag)
   const terminatorPosition = argv.indexOf('--')
@@ -69,7 +68,7 @@ export interface DetectOptions extends Options {
 /**
  * @internal
  */
-function detectSupportLevel(
+function detectColorSupportLevel(
   stream?: Partial<tty.WriteStream>,
   options: DetectOptions = {},
 ): ColorSupportLevel {
@@ -129,7 +128,7 @@ function detectSupportLevel(
     }
 
     if (
-      ciVendors.some((vendor) => vendor in process.env) ||
+      CI_VENDORS.some((vendor) => vendor in process.env) ||
       process.env['CI_NAME'] === 'codeship'
     ) {
       return 1
@@ -184,40 +183,6 @@ function detectSupportLevel(
 }
 
 /**
- * Levels:
- * - `0` - All colors disabled.
- * - `1` - Basic 16 colors support.
- * - `2` - ANSI 256 colors support.
- * - `3` - Truecolor 16 million colors support.
- */
-export type ColorSupportLevel = 0 | 1 | 2 | 3
-
-/**
- * Detect whether the terminal supports color.
- */
-export type ColorSupport = {
-  /**
-   * The color level.
-   */
-  level: ColorSupportLevel
-
-  /**
-   * Whether basic 16 colors are supported.
-   */
-  hasBasic: boolean
-
-  /**
-   * Whether ANSI 256 colors are supported.
-   */
-  has256: boolean
-
-  /**
-   * Whether Truecolor 16 million colors are supported.
-   */
-  has16m: boolean
-}
-
-/**
  * Idk.
  */
 export interface Options {
@@ -229,20 +194,20 @@ export interface Options {
   sniffFlags?: boolean
 }
 
-export function createSupportsColor(
+export function createColorSupport(
   stream?: Partial<tty.WriteStream>,
   options: Options = {},
 ): false | ColorSupport {
-  const level = detectSupportLevel(stream, {
+  const level = detectColorSupportLevel(stream, {
     streamIsTTY: stream && stream.isTTY,
     ...options,
   })
   return translateLevel(level)
 }
 
-export const stdout = createSupportsColor({ isTTY: tty.isatty(1) })
+export const stdout = createColorSupport({ isTTY: tty.isatty(1) })
 
-export const stderr = createSupportsColor({ isTTY: tty.isatty(2) })
+export const stderr = createColorSupport({ isTTY: tty.isatty(2) })
 
 export const supportsColor = { stdout, stderr }
 

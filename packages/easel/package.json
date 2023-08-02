@@ -1,7 +1,7 @@
 {
-  "name": "@griseo-js/ansi",
+  "name": "@griseo-js/easel",
   "version": "0.2.0",
-  "description": "terminal string styling done right",
+  "description": "an easel for griseo to paint with!",
   "license": "MIT",
   "homepage": "git@github.com:Elysium-Everlasting/griseo-js",
   "funding": "git@github.com:Elysium-Everlasting/griseo-js",
@@ -15,7 +15,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Elysium-Everlasting/griseo-js.git",
-    "directory": "packages/brush"
+    "directory": "packages/easel"
   },
   "bugs": {
     "url": "https://github.com/Elysium-Everlasting/griseo-js/issues"

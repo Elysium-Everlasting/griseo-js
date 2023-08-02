@@ -2,17 +2,20 @@ export type RgbColor = [number, number, number]
 
 const ANSI_BACKGROUND_OFFSET = 10
 
+/**
+ * A wrapper function takes some arguments and returns a (formatted) string.
+ */
 type Wrapper = (...args: any[]) => string
 
-function wrapAnsi16(offset = 0): Wrapper {
+export function wrapAnsi16(offset = 0): Wrapper {
   return (code: number) => `\u001B[${code + offset}m`
 }
 
-function wrapAnsi256(offset = 0): Wrapper {
+export function wrapAnsi256(offset = 0): Wrapper {
   return (code: number) => `\u001B[${38 + offset};5;${code}m`
 }
 
-function wrapAnsi16m(offset = 0): Wrapper {
+export function wrapAnsi16m(offset = 0): Wrapper {
   return (...rgb: RgbColor) => `\u001B[${38 + offset};2;${rgb[0]};${rgb[1]};${rgb[2]}m`
 }
 
