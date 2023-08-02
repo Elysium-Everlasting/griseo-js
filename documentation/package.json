@@ -4,8 +4,8 @@
   "description": "documentation for griseo-js - a collection of ui tools",
   "private": true,
   "license": "MIT",
-  "homepage": "git@github.com:Elysium-Everlasting/griseo-js",
-  "funding": "git@github.com:Elysium-Everlasting/griseo-js",
+  "homepage": "https://github.com/Elysium-Everlasting/griseo-js",
+  "funding": "https://github.com/Elysium-Everlasting/griseo-js",
   "contributors": [
     {
       "name": "ap0nia",

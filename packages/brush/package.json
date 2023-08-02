@@ -3,8 +3,8 @@
   "version": "0.2.0",
   "description": "use griseo's brush to paint the terminal 🖌️",
   "license": "MIT",
-  "homepage": "git@github.com:Elysium-Everlasting/griseo-js",
-  "funding": "git@github.com:Elysium-Everlasting/griseo-js",
+  "homepage": "https://github.com/Elysium-Everlasting/griseo-js",
+  "funding": "https://github.com/Elysium-Everlasting/griseo-js",
   "contributors": [
     {
       "name": "ap0nia",
