@@ -143,6 +143,13 @@ function argsToString(...args: unknown[]): string {
 }
 
 /**
+ * Create a noop function that's used as the original object to apply the prototype to.
+ */
+function createBrushPrototype(): Brush {
+  return ((...args) => argsToString(...args)) as Brush
+}
+
+/**
  * Apply brush styles to a string.
  */
 function paint(brush: Brush, stroke: BrushStroke, args: unknown[]): string {
@@ -169,7 +176,7 @@ function paint(brush: Brush, stroke: BrushStroke, args: unknown[]): string {
  * @internal
  */
 export function _createBrush(options: Options = {}) {
-  const brush = ((...args) => (args.length === 1 ? '' + args[0] : args.join(' '))) as Brush
+  const brush = createBrushPrototype()
 
   brush.level = options.level ?? 0
 
@@ -188,8 +195,9 @@ export function _createBrush(options: Options = {}) {
     visible: {
       enumerable: true,
       get() {
-        const builder = ((...args: unknown[]) =>
-          args.length ? argsToString(...args) : builder) as BrushStroke
+        const builder = ((...args: unknown[]) => {
+          return args.length ? argsToString(...args) : builder
+        }) as BrushStroke
 
         Object.setPrototypeOf(builder, prototype)
         Object.defineProperty(this, 'visible', { value: builder })
@@ -300,8 +308,7 @@ export function _createBrush(options: Options = {}) {
     return trueColorPropertyDescriptors
   }
 
-  const prototype = Object.defineProperties(() => {}, properties)
-
+  const prototype = Object.defineProperties(createBrushPrototype(), properties)
   Object.setPrototypeOf(brush, prototype)
 
   return brush
