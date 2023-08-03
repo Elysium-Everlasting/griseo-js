@@ -1,5 +1,5 @@
 import { COLORS, SGR_PARAMETERS } from '@griseo-js/easel/sgr'
-import type { ColorSupportLevel } from '@griseo-js/easel/color-support/node'
+import type { ColorSupportLevel } from '@griseo-js/easel/color-support'
 import {
   wrappers,
   hexToRgb,

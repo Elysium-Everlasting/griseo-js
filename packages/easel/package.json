@@ -49,6 +49,12 @@
       "require": "./dist/sgr.cjs",
       "default": "./dist/sgr.js"
     },
+    "./color-support": {
+      "types": "./dist/color-support/index.d.ts",
+      "import": "./dist/color-support/index.js",
+      "require": "./dist/color-support/index.cjs",
+      "default": "./dist/color-support/index.js"
+    },
     "./color-support/*": {
       "types": "./dist/color-support/*.d.ts",
       "import": "./dist/color-support/*.js",
