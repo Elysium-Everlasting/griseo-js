@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { chalk } from '../src/index.js'
+import { brush } from '../src/index.js'
 
 /**
  * TODO: Do this when ESM supports loader hooks
@@ -24,7 +24,7 @@ import { chalk } from '../src/index.js'
 
 describe('color support', () => {
   test('colors can be forced by using chalk.level', () => {
-    chalk.level = 1
-    expect(chalk.green('hello')).toBe('\u001B[32mhello\u001B[39m')
+    brush.level = 1
+    expect(brush.green('hello')).toBe('\u001B[32mhello\u001B[39m')
   })
 })

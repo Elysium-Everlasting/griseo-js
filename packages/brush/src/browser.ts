@@ -1,8 +1,8 @@
-import { stdout, stderr } from '@griseo-js/easel/color-support/node'
+import { stdout, stderr } from '@griseo-js/easel/color-support/browser'
 import { _createBrush, type Options } from './brush.js'
 
 /**
- * Create a new brush. Infer terminal color support in a NodeJS setting.
+ * Create a new brush. Infer terminal color support in a browser setting.
  */
 export function createBrush(options: Options = {}) {
   options.level = options.level != null ? options.level : stdout ? stdout.level : 0

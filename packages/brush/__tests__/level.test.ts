@@ -1,9 +1,9 @@
 import { describe, test, expect } from 'vitest'
-import { createChalk } from '../src/index.js'
+import { createBrush } from '../src/index.js'
 
 describe('level', () => {
   test("don't output colors when manually disabled", () => {
-    const chalk = createChalk({ level: 1 })
+    const chalk = createBrush({ level: 1 })
 
     chalk.level = 0
 
@@ -11,7 +11,7 @@ describe('level', () => {
   })
 
   test('enable/disable colors based on overall chalk .level property, not individual instances', () => {
-    const chalk = createChalk({ level: 1 })
+    const chalk = createBrush({ level: 1 })
 
     chalk.level = 1
     const { red } = chalk
@@ -23,7 +23,7 @@ describe('level', () => {
   })
 
   test('propagate enable/disable changes from child colors', () => {
-    const chalk = createChalk({ level: 1 })
+    const chalk = createBrush({ level: 1 })
 
     chalk.level = 1
 
