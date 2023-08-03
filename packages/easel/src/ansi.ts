@@ -44,7 +44,7 @@ export function rgbToAnsi256(...rgb: RgbColor): number {
   )
 }
 
-export function hexToRgb(hex: number): RgbColor {
+export function hexToRgb(hex: number | string): RgbColor {
   const matches = /[a-f\d]{6}|[a-f\d]{3}/i.exec(hex.toString(16))
   if (!matches) {
     return [0, 0, 0]
