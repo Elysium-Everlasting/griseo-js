@@ -6,7 +6,7 @@ import {
   rgbToAnsi,
   rgbToAnsi256,
   type RgbColor,
-  type ColorType,
+  type ColorSupport,
 } from '@griseo-js/easel/ansi'
 
 /**
@@ -21,10 +21,10 @@ export interface Options {
    * depending on whether the NodeJS or browser version is used.
    *
    * Levels:
-   *  - 0 - All colors disabled.
-   *  - 1 - Basic 16 colors support.
-   *  - 2 - ANSI 256 colors support.
-   *  - 3 - True color 16 million colors support.
+   * `0` - All colors disabled.
+   * `1` - Basic 16 colors support.
+   * `2` - ANSI 256 colors support.
+   * `3` - Truecolor 16 million colors support.
    */
   level?: ColorSupportLevel
 }
@@ -116,7 +116,7 @@ type TrueColorStrokes = {
  *
  * @example {@link wrappers.color[ColorType]} or {@link wrappers.bgColor[ColorType]}
  */
-const levelToColorType: Record<ColorSupportLevel, ColorType> = {
+const levelToColorType: Record<ColorSupportLevel, ColorSupport> = {
   0: 'ansi',
   1: 'ansi',
   2: 'ansi256',
@@ -272,7 +272,7 @@ export function _createBrush(options: Options = {}) {
               /**
                * To obtain the opening ANSI code:
                *
-               * - If ansi or bgAnsi, then forward all arguments as-is to the ansi256 wrapper function.
+               * - If ansi or bgAnsi, then forward to the ansi256 wrapper function.
                * - If hex or rgb, then forward the code or rgb tuple to the wrapper function,
                *   depending on what arguments the function needs.
                *
@@ -280,7 +280,7 @@ export function _createBrush(options: Options = {}) {
                */
               const open =
                 model === 'ansi256' || model === 'bgAnsi256'
-                  ? wrappers[wrapperType].ansi256(...args)
+                  ? wrappers[wrapperType].ansi256(args[0])
                   : colorType === 'ansi'
                   ? wrappers[wrapperType][colorType](rgbToAnsi(...rgb))
                   : colorType === 'ansi256'

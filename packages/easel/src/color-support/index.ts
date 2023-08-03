@@ -8,7 +8,7 @@
 export type ColorSupportLevel = 0 | 1 | 2 | 3
 
 /**
- * Describe the color support of a terminal.
+ * Describes the color support of an environment.
  */
 export type ColorSupport = {
   /**

@@ -1,4 +1,5 @@
 /**
+ * Select Graphic Rendition (SGR) parameters for ANSI escape codes.
  * @see https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_.28Select_Graphic_Rendition.29_parameters
  */
 export const SGR_PARAMETERS = {
@@ -59,6 +60,9 @@ export const SGR_PARAMETERS = {
   BG_BRIGHT_WHITE: 107,
 } as const
 
+/**
+ * A mapping of modifier names to SGR parameters, i.e. [modifier, modifier-off].
+ */
 export const MODIFIER_COLORS = {
   reset: [SGR_PARAMETERS.RESET, SGR_PARAMETERS.RESET],
   bold: [SGR_PARAMETERS.BOLD, SGR_PARAMETERS.BOLD_OFF],
@@ -71,6 +75,9 @@ export const MODIFIER_COLORS = {
   strikethrough: [SGR_PARAMETERS.STRIKETHROUGH, SGR_PARAMETERS.STRIKETHROUGH_OFF],
 } satisfies ColorMapping
 
+/**
+ * A mapping of foreground color names to SGR parameters, i.e. [foreground, default-foreground].
+ */
 export const FOREGROUND_COLORS = {
   black: [SGR_PARAMETERS.FG_BLACK, SGR_PARAMETERS.FG_DEFAULT],
   red: [SGR_PARAMETERS.FG_RED, SGR_PARAMETERS.FG_DEFAULT],
@@ -93,6 +100,9 @@ export const FOREGROUND_COLORS = {
   whiteBright: [SGR_PARAMETERS.FG_BRIGHT_WHITE, SGR_PARAMETERS.FG_DEFAULT],
 } satisfies ColorMapping
 
+/**
+ * A mapping of background color names to SGR parameters, i.e. [background, default-background].
+ */
 export const BACKGROUND_COLORS = {
   bgBlack: [SGR_PARAMETERS.BG_BLACK, SGR_PARAMETERS.BG_DEFAULT],
   bgRed: [SGR_PARAMETERS.BG_RED, SGR_PARAMETERS.BG_DEFAULT],
@@ -115,18 +125,33 @@ export const BACKGROUND_COLORS = {
   bgWhiteBright: [SGR_PARAMETERS.BG_BRIGHT_WHITE, SGR_PARAMETERS.BG_DEFAULT],
 } satisfies ColorMapping
 
+/**
+ * All recognized colors.
+ */
 export const COLORS = {
   ...MODIFIER_COLORS,
   ...FOREGROUND_COLORS,
   ...BACKGROUND_COLORS,
 }
 
+/**
+ * Recognized modifier names.
+ */
 export const modifierNames = Object.keys(MODIFIER_COLORS)
 
+/**
+ * Recognized foreground color names.
+ */
 export const foregroundColorNames = Object.keys(FOREGROUND_COLORS)
 
+/**
+ * Recognized background color names.
+ */
 export const backgroundColorNames = Object.keys(BACKGROUND_COLORS)
 
+/**
+ * Recognized color names.
+ */
 export const colorNames = [...foregroundColorNames, ...backgroundColorNames]
 
 /**
@@ -142,14 +167,23 @@ export type SgrParameterName = keyof SgrParameters
 /**
  * Recognized SGR code values.
  */
-export type SgrCode = SgrParameters[SgrParameterName]
+export type SgrCode = SgrParameters[SgrParameterName] | AutocompleteNumber
 
 /**
  * A color pair describes the opening and closing SGR parameters for a colored string.
  */
-export type ColorPair = [SgrCode, SgrCode]
+export type ColorPair = [SgrCode | AutocompleteNumber, SgrCode | AutocompleteNumber]
 
 /**
  * A color mapping describes the SGR parameters for a color name.
  */
 export type ColorMapping = Record<string, ColorPair>
+
+/**
+ * This type can be in a union with a defined union of other numbers to allow
+ * any number as a valid value, but still accommodate TypeScript autocompletion.
+ *
+ * Idk the logic for this working.
+ * It's needed because {@example 0 | 1 | number} will not autocomplete.
+ */
+type AutocompleteNumber = number & NonNullable<unknown>

@@ -1,24 +1,38 @@
+/**
+ * An RGB color is a tuple of [red, green, blue] values,
+ * where each value is an integer between 0 and 255.
+ */
 export type RgbColor = [number, number, number]
 
+/**
+ * Idk where this comes from.
+ */
 const ANSI_BACKGROUND_OFFSET = 10
 
 /**
- * A wrapper function takes some arguments and returns a (formatted) string.
+ * Returns a function that wraps a provided code with the ANSI (16 color support) escape code.
  */
-type Wrapper = (...args: any[]) => string
-
-export function wrapAnsi16(offset = 0): Wrapper {
+export function wrapAnsi16(offset = 0) {
   return (code: number) => `\u001B[${code + offset}m`
 }
 
-export function wrapAnsi256(offset = 0): Wrapper {
+/**
+ * Returns a function that wraps a provided code with the ANSI (256 color support) escape code.
+ */
+export function wrapAnsi256(offset = 0) {
   return (code: number) => `\u001B[${38 + offset};5;${code}m`
 }
 
-export function wrapAnsi16m(offset = 0): Wrapper {
+/**
+ * Returns a function that wraps a provided code with the ANSI (16 million color support) escape code.
+ */
+export function wrapAnsi16m(offset = 0) {
   return (...rgb: RgbColor) => `\u001B[${38 + offset};2;${rgb[0]};${rgb[1]};${rgb[2]}m`
 }
 
+/**
+ * Converts an RGB color to an ANSI 256 color code.
+ */
 export function rgbToAnsi256(...rgb: RgbColor): number {
   const [red, green, blue] = rgb
 
@@ -44,6 +58,9 @@ export function rgbToAnsi256(...rgb: RgbColor): number {
   )
 }
 
+/**
+ * Converts a hex color to an RGB color.
+ */
 export function hexToRgb(hex: number | string): RgbColor {
   const matches = /[a-f\d]{6}|[a-f\d]{3}/i.exec(hex.toString(16))
   if (!matches) {
@@ -61,10 +78,16 @@ export function hexToRgb(hex: number | string): RgbColor {
   return [(integer >> 16) & 0xff, (integer >> 8) & 0xff, (integer >> 0) & 0xff]
 }
 
+/**
+ * Converts a hex color to an ANSI 256 color code.
+ */
 export function hexToAnsi256(hex: number): number {
   return rgbToAnsi256(...hexToRgb(hex))
 }
 
+/**
+ * Converts an ANSI 256 color code to an ANSI 16 color code.
+ */
 export function ansi256ToAnsi(code: number): number {
   if (code < 8) {
     return 30 + code
@@ -107,28 +130,50 @@ export function ansi256ToAnsi(code: number): number {
   return result
 }
 
+/**
+ * Converts an RGB color to an ANSI 16 color code.
+ */
 export function rgbToAnsi(...color: RgbColor): number {
   return ansi256ToAnsi(rgbToAnsi256(...color))
 }
 
+/**
+ * Converts a hex color to an ANSI 16 color code.
+ */
 export function hexToAnsi(hex: number): number {
   return ansi256ToAnsi(hexToAnsi256(hex))
 }
 
-export type ColorType = 'ansi' | 'ansi256' | 'ansi16m'
+/**
+ * Number of colors supported.
+ *
+ * - `ansi` - 16 colors.
+ * - `ansi256` - 256 colors.
+ * - `ansi16m` - 16 million colors (RGB).
+ */
+export type ColorSupport = 'ansi' | 'ansi256' | 'ansi16m'
 
+/**
+ * Functions that take a __foreground__ color code and wrap it with the appropriate ANSI escape code.
+ */
 export const colorWrappers = {
   ansi: wrapAnsi16(),
   ansi256: wrapAnsi256(),
   ansi16m: wrapAnsi16m(),
-} as const satisfies Record<ColorType, Wrapper>
+} as const satisfies Record<ColorSupport, Function>
 
+/**
+ * Functions that take a __background__ color code and wrap it with the appropriate ANSI escape code.
+ */
 export const bgColorWrappers = {
   ansi: wrapAnsi16(ANSI_BACKGROUND_OFFSET),
   ansi256: wrapAnsi256(ANSI_BACKGROUND_OFFSET),
   ansi16m: wrapAnsi16m(ANSI_BACKGROUND_OFFSET),
-} as const satisfies Record<ColorType, Wrapper>
+} as const satisfies Record<ColorSupport, Function>
 
+/**
+ * Functions that take a color code and wrap it with the appropriate ANSI escape code.
+ */
 export const wrappers = {
   color: colorWrappers,
   bgColor: bgColorWrappers,
