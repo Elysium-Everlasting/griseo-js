@@ -1,5 +1,5 @@
-import { describe, test, expect } from 'vitest'
 import process from 'node:process'
+import { describe, test, expect } from 'vitest'
 import { chalk, chalkStderr, createChalk } from '../src/index.js'
 
 chalk.level = 3
@@ -36,6 +36,7 @@ describe('chalk', () => {
     expect(chalk.red.bgGreen.underline('foo')).toBe(
       '\u001B[31m\u001B[42m\u001B[4mfoo\u001B[24m\u001B[49m\u001B[39m',
     )
+
     expect(chalk.underline.red.bgGreen('foo')).toBe(
       '\u001B[4m\u001B[31m\u001B[42mfoo\u001B[49m\u001B[39m\u001B[24m',
     )
@@ -59,15 +60,15 @@ describe('chalk', () => {
     )
   })
 
-  // test('support caching multiple styles', () => {
-  //   const { red, green } = chalk.red;
-  //   const redBold = red.bold;
-  //   const greenBold = green.bold;
+  test('support caching multiple styles', () => {
+    const { red, green } = chalk.red
+    const redBold = red.bold
+    const greenBold = green.bold
 
-  //   expect(red('foo')) green('foo'));
-  //   expect(redBold('bar')) greenBold('bar'));
-  //   expect(green('baz')) greenBold('baz'));
-  // });
+    expect(red('foo')).not.toBe(green('foo'))
+    expect(redBold('bar')).not.toBe(greenBold('bar'))
+    expect(green('baz')).not.toBe(greenBold('baz'))
+  })
 
   test('alias gray to grey', () => {
     expect(chalk.grey('foo')).toBe('\u001B[90mfoo\u001B[39m')
@@ -88,8 +89,10 @@ describe('chalk', () => {
 
   test('keep Function.prototype methods', () => {
     expect(Reflect.apply(chalk.grey, null, ['foo'])).toBe('\u001B[90mfoo\u001B[39m')
-    // expect(chalk.reset(chalk.red.bgGreen.underline.bind(null)('foo') + 'foo')).toBe('\u001B[0m\u001B[31m\u001B[42m\u001B[4mfoo\u001B[24m\u001B[49m\u001B[39mfoo\u001B[0m');
-    expect(chalk.red.blue.black.call('')).toBe('')
+    expect(chalk.reset(chalk.red.bgGreen.underline.bind(null)('foo') + 'foo')).toBe(
+      '\u001B[0m\u001B[31m\u001B[42m\u001B[4mfoo\u001B[24m\u001B[49m\u001B[39mfoo\u001B[0m',
+    )
+    // expect(chalk.red.blue.black.call('')).toBe('')
   })
 
   test('line breaks should open and close colors', () => {
@@ -123,18 +126,18 @@ describe('chalk', () => {
     expect(chalk.bgHex('#FF0000')('hello')).toBe('hello')
   })
 
-  // test('supports blackBright color', () => {
-  //   expect(chalk.blackBright('foo')).toBe('\u001B[90mfoo\u001B[39m');
-  // });
+  test('supports blackBright color', () => {
+    expect(chalk.blackBright('foo')).toBe('\u001B[90mfoo\u001B[39m')
+  })
 
-  // test('sets correct level for chalkStderr and respects it', () => {
-  //   expect(chalkStderr.level).toBe(3);
-  //   expect(chalkStderr.red.bold('foo')).toBe('\u001B[31m\u001B[1mfoo\u001B[22m\u001B[39m');
-  // });
+  test('sets correct level for chalkStderr and respects it', () => {
+    expect(chalkStderr.level).toBe(3)
+    expect(chalkStderr.red.bold('foo')).toBe('\u001B[31m\u001B[1mfoo\u001B[22m\u001B[39m')
+  })
 
-  // test('keeps function prototype methods', t => {
-  //   t.is(chalk.apply(chalk, ['foo']), 'foo');
-  //   t.is(chalk.bind(chalk, 'foo')(), 'foo');
-  //   t.is(chalk.call(chalk, 'foo'), 'foo');
-  // });
+  test('keeps function prototype methods', () => {
+    expect(chalk.apply(chalk, ['foo'])).toBe('foo')
+    expect(chalk.bind(chalk, 'foo')()).toBe('foo')
+    expect(chalk.call(chalk, 'foo')).toBe('foo')
+  })
 })

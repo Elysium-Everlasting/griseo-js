@@ -80,7 +80,9 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@griseo-js/easel": "workspace:*"
+    "@griseo-js/easel": "workspace:*",
+    "ansi-colors": "^4.1.3",
+    "picocolors": "^1.0.0"
   },
   "devDependencies": {
     "tsup": "^7.1.0",
