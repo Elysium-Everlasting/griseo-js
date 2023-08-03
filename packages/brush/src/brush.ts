@@ -14,13 +14,17 @@ import {
  */
 export interface Options {
   /**
-   * Specify the color support for Chalk.
-   * By default, color support is automatically detected based on the environment.
+   * Explicitly set the desired color support for the brush.
+   *
+   * @default
+   * Automatically detected based on the environment,
+   * depending on whether the NodeJS or browser version is used.
+   *
    * Levels:
-   *  - `0` - All colors disabled.
-   *  - `1` - Basic 16 colors support.
-   *  - `2` - ANSI 256 colors support.
-   *  - `3` - True color 16 million colors support.
+   *  - 0 - All colors disabled.
+   *  - 1 - Basic 16 colors support.
+   *  - 2 - ANSI 256 colors support.
+   *  - 3 - True color 16 million colors support.
    */
   level?: ColorSupportLevel
 }
@@ -239,8 +243,7 @@ export function _createBrush(options: Options = {}) {
         /**
          * The closing SGR code depends on whether a foreground or background color is being set.
          */
-        const closeSgr =
-          wrapperType === 'color' ? SGR_PARAMETERS.FG_DEFAULT : SGR_PARAMETERS.BG_DEFAULT
+        const closeSgr = SGR_PARAMETERS[wrapperType === 'color' ? 'FG_DEFAULT' : 'BG_DEFAULT']
 
         descriptors[model] = {
           get() {
@@ -272,9 +275,9 @@ export function _createBrush(options: Options = {}) {
                   ? wrappers[wrapperType].ansi256(...args)
                   : colorType === 'ansi'
                   ? wrappers[wrapperType][colorType](rgbToAnsi(...rgb))
-                  : colorType === 'ansi16m'
-                  ? wrappers[wrapperType][colorType](...rgb)
-                  : wrappers[wrapperType][colorType](rgbToAnsi256(...rgb))
+                  : colorType === 'ansi256'
+                  ? wrappers[wrapperType][colorType](rgbToAnsi256(...rgb))
+                  : wrappers[wrapperType][colorType](...rgb)
 
               const close = `\x1b[${closeSgr}m`
 
