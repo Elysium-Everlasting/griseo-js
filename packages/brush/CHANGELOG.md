@@ -1,5 +1,16 @@
 # @aponia/chalk
 
+## 1.0.0
+
+### Major Changes
+
+- 0bcb95c: feat: Official release of packages
+
+### Patch Changes
+
+- Updated dependencies [0bcb95c]
+  - @griseo-js/palette@1.0.0
+
 ## 0.3.1
 
 ### Patch Changes
