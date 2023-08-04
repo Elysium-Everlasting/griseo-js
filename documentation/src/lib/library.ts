@@ -8,7 +8,7 @@ export interface Library {
   href: string
 }
 
-export function getLibraries(): Library[] {
+export function getLibraries(base = ''): Library[] {
   const projects = findAllProjects(path.resolve(getWorkspaceRoot(), 'packages'))
 
   const libraries: Library[] = projects
@@ -38,7 +38,7 @@ export function getLibraries(): Library[] {
       /**
        * href is just the lowercase name.
        */
-      library.href = `/${library.name}`
+      library.href = `/${path.join(base, library.name)}`
 
       /**
        * Capitalize the first letter of the name.

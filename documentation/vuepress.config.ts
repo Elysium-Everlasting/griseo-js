@@ -12,9 +12,10 @@ import { generateSidebar } from './src/lib/sidebar.js'
 import { getLibraries } from './src/lib/library.js'
 
 const gitRepository = repository.url.split('/').pop() ?? ''
+const base = ci.GITHUB_ACTIONS ? (`/${gitRepository.replace('.git', '')}/` as const) : undefined
 
 const config: ReturnType<typeof defineUserConfig> = defineUserConfig({
-  base: ci.GITHUB_ACTIONS ? `/${gitRepository.replace('.git', '')}/` : undefined,
+  base,
 
   title: 'Griseo',
 
@@ -23,7 +24,7 @@ const config: ReturnType<typeof defineUserConfig> = defineUserConfig({
   public: 'static',
 
   define: {
-    __libraries__: getLibraries(),
+    __libraries__: getLibraries(base),
   },
 
   alias: {
