@@ -1,7 +1,7 @@
 {
   "name": "@griseo-js/brush",
   "version": "0.3.1",
-  "description": "use griseo's brush to paint the terminal 🖌️",
+  "description": "a brush to paint beautifully formatted strings 🖌️",
   "license": "MIT",
   "homepage": "https://elysium-everlasting.github.io/griseo-js/brush",
   "funding": "https://github.com/Elysium-Everlasting/griseo-js",
@@ -80,7 +80,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@griseo-js/easel": "workspace:*",
+    "@griseo-js/palette": "workspace:*",
     "ansi-colors": "^4.1.3",
     "picocolors": "^1.0.0"
   },

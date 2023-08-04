@@ -1,4 +1,8 @@
 /**
+ * Color support level.
+ *
+ * @see https://github.com/termstandard/colors
+ *
  * Levels:
  * - `0` - All colors disabled.
  * - `1` - Basic 16 colors support.
@@ -17,17 +21,17 @@ export type ColorSupport = {
   level: ColorSupportLevel
 
   /**
-   * Whether basic 16 colors are supported.
+   * Whether 16 (basic) colors are supported.
    */
   hasBasic: boolean
 
   /**
-   * Whether ANSI 256 colors are supported.
+   * Whether 256 (ANSI) colors are supported.
    */
   has256: boolean
 
   /**
-   * Whether Truecolor 16 million colors are supported.
+   * Whether 16 million (Truecolor) colors are supported.
    */
   has16m: boolean
 }

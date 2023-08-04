@@ -16,6 +16,8 @@ export interface Options {
   /**
    * Explicitly set the desired color support for the brush.
    *
+   * @see https://github.com/termstandard/colors
+   *
    * @default
    * Automatically detected based on the environment,
    * depending on whether the NodeJS or browser version is used.
@@ -41,7 +43,7 @@ type BrushState = {
   /**
    * Indicates the supported range of colors.
    *
-   * @default Inferred based on the terminal environment.
+   * @default Inferred based on the terminal environment when using a NodeJS or browser specific brush.
    */
   level: ColorSupportLevel
 }
@@ -97,8 +99,8 @@ type ColorStrokes = Record<keyof typeof COLORS, BrushStroke>
 /**
  * Brush strokes that apply true colors.
  *
- * These differ from regular {@link ColorStrokes} because
- * they need to be invoked with the color value to return a {@link BrushStroke}.
+ * These differ from regular {@link ColorStrokes} because they need to be
+ * initialized with the desired color to return a {@link BrushStroke}.
  */
 type TrueColorStrokes = {
   rgb(...rgb: RgbColor): BrushStroke
@@ -143,7 +145,7 @@ function argsToString(...args: unknown[]): string {
 }
 
 /**
- * Create a noop function that's used as the original object to apply the prototype to.
+ * Create a noop function as a base object to define the {@link Brush} properties on.
  */
 function createBrushPrototype(): Brush {
   return ((...args) => argsToString(...args)) as Brush
@@ -151,6 +153,8 @@ function createBrushPrototype(): Brush {
 
 /**
  * Apply brush styles to a string.
+ *
+ * A {@link BrushStroke} can invoke this and pass itself as the second argument.
  */
 function paint(brush: Brush, stroke: BrushStroke, args: unknown[]): string {
   let input = argsToString(...args)
@@ -195,14 +199,14 @@ export function _createBrush(options: Options = {}) {
     visible: {
       enumerable: true,
       get() {
-        const builder = ((...args: unknown[]) => {
-          return args.length ? argsToString(...args) : builder
+        const brushStroke = ((...args: unknown[]) => {
+          return args.length ? argsToString(...args) : brushStroke
         }) as BrushStroke
 
-        Object.setPrototypeOf(builder, prototype)
-        Object.defineProperty(this, 'visible', { value: builder })
+        Object.setPrototypeOf(brushStroke, prototype)
+        Object.defineProperty(this, 'visible', { value: brushStroke })
 
-        return builder
+        return brushStroke
       },
     },
   }
@@ -225,7 +229,7 @@ export function _createBrush(options: Options = {}) {
             brushStroke.close = currentThis.close ? close + currentThis.close : close
 
             Object.setPrototypeOf(brushStroke, prototype)
-            Object.defineProperty(this, name, { value: brushStroke })
+            Object.defineProperty(currentThis, name, { value: brushStroke })
 
             return brushStroke
           },
@@ -293,7 +297,7 @@ export function _createBrush(options: Options = {}) {
               brushStroke.close = currentThis.close ? close + currentThis.close : close
 
               Object.setPrototypeOf(brushStroke, prototype)
-              Object.defineProperty(this, model, { value: brushStroke })
+              Object.defineProperty(currentThis, model, { value: brushStroke })
 
               return brushStroke
             }

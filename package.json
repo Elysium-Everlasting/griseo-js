@@ -4,8 +4,8 @@
   "description": "monorepo for griseo-js - a collection of ui tools",
   "private": true,
   "license": "MIT",
-  "homepage": "git@github.com:Elysium-Everlasting/griseo-js",
-  "funding": "git@github.com:Elysium-Everlasting/griseo-js",
+  "homepage": "https://elysium-everlasting.github.io/griseo-js/",
+  "funding": "https://github.com/Elysium-Everlasting/griseo-js",
   "contributors": [
     {
       "name": "ap0nia",
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Elysium-Everlasting/griseo-js.git"
+    "url": "https://github.com/Elysium-Everlasting/griseo-js"
   },
   "bugs": {
     "url": "https://github.com/Elysium-Everlasting/griseo-js/issues"
