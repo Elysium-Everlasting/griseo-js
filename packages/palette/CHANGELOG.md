@@ -1,5 +1,11 @@
 # @griseo-js/easel
 
+## 1.0.0
+
+### Major Changes
+
+- 0bcb95c: feat: Official release of packages
+
 ## 0.2.1
 
 ### Patch Changes
