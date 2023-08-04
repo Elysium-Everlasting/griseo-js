@@ -1,5 +1,5 @@
-import { COLORS, SGR_PARAMETERS } from '@griseo-js/easel/sgr'
-import type { ColorSupportLevel } from '@griseo-js/easel/color-support'
+import { COLORS, SGR_PARAMETERS } from '@griseo-js/palette/sgr'
+import type { ColorSupportLevel } from '@griseo-js/palette/color-support'
 import {
   wrappers,
   hexToRgb,
@@ -7,7 +7,7 @@ import {
   rgbToAnsi256,
   type RgbColor,
   type ColorSupport,
-} from '@griseo-js/easel/ansi'
+} from '@griseo-js/palette/ansi'
 
 /**
  * Brush initialization options.
