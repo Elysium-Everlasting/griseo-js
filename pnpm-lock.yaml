@@ -79,12 +79,21 @@ importers:
       '@vuepress/client':
         specifier: 2.0.0-beta.66
         version: 2.0.0-beta.66
+      '@vuepress/plugin-back-to-top':
+        specifier: 2.0.0-beta.66
+        version: 2.0.0-beta.66
       '@vuepress/plugin-register-components':
+        specifier: 2.0.0-beta.66
+        version: 2.0.0-beta.66
+      '@vuepress/plugin-toc':
         specifier: 2.0.0-beta.66
         version: 2.0.0-beta.66
       ci-info:
         specifier: ^3.8.0
         version: 3.8.0
+      markdown-it-shiki-twoslash:
+        specifier: ^2.1.3
+        version: 2.1.3(typescript@5.1.6)
       stylus:
         specifier: ^0.59.0
         version: 0.59.0
@@ -1855,6 +1864,13 @@ packages:
       }
     dev: true
 
+  /@types/unist@2.0.7:
+    resolution:
+      {
+        integrity: sha512-cputDpIbFgLUaGQn6Vqg3/YsJwxUwHLO13v3i5ouxT4lat0khip9AEWxtERujXV9wxIB1EyF97BSJFt6vpdI8g==,
+      }
+    dev: true
+
   /@types/web-bluetooth@0.0.17:
     resolution:
       {
@@ -2016,6 +2032,41 @@ packages:
     dependencies:
       '@typescript-eslint/types': 6.2.0
       eslint-visitor-keys: 3.4.2
+    dev: true
+
+  /@typescript/twoslash@3.1.0:
+    resolution:
+      {
+        integrity: sha512-kTwMUQ8xtAZaC4wb2XuLkPqFVBj2dNBueMQ89NWEuw87k2nLBbuafeG5cob/QEr6YduxIdTVUjix0MtC7mPlmg==,
+      }
+    dependencies:
+      '@typescript/vfs': 1.3.5
+      debug: 4.3.4
+      lz-string: 1.5.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@typescript/vfs@1.3.4:
+    resolution:
+      {
+        integrity: sha512-RbyJiaAGQPIcAGWFa3jAXSuAexU4BFiDRF1g3hy7LmRqfNpYlTQWGXjcrOaVZjJ8YkkpuwG0FcsYvtWQpd9igQ==,
+      }
+    dependencies:
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@typescript/vfs@1.3.5:
+    resolution:
+      {
+        integrity: sha512-pI8Saqjupf9MfLw7w2+og+fmb0fZS0J6vsKXXrp4/PDXEFvntgzXmChCXC/KefZZS0YGS6AT8e0hGAJcTsdJlg==,
+      }
+    dependencies:
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /@unocss/astro@0.54.1(vite@4.4.7):
@@ -2767,6 +2818,22 @@ packages:
       - supports-color
     dev: true
 
+  /@vuepress/plugin-toc@2.0.0-beta.66:
+    resolution:
+      {
+        integrity: sha512-zAGa7nmgBb6L5HSW3GF2jqKyw8CdRa8XBa/cVYMJWzYGc2wWcazqhlNitYRj2+RfTi4bUFqk/bP8U84Y3xP7PQ==,
+      }
+    dependencies:
+      '@vuepress/client': 2.0.0-beta.66
+      '@vuepress/core': 2.0.0-beta.66
+      '@vuepress/utils': 2.0.0-beta.66
+      vue: 3.3.4
+      vue-router: 4.2.4(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - supports-color
+    dev: true
+
   /@vuepress/shared@2.0.0-beta.66:
     resolution:
       {
@@ -3196,6 +3263,15 @@ packages:
       }
     engines: { node: '>=8' }
     requiresBuild: true
+    dev: true
+
+  /bindings@1.5.0:
+    resolution:
+      {
+        integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==,
+      }
+    dependencies:
+      file-uri-to-path: 1.0.0
     dev: true
 
   /bl@4.1.0:
@@ -3862,6 +3938,18 @@ packages:
     engines: { node: '>=8' }
     dev: true
 
+  /deasync@0.1.28:
+    resolution:
+      {
+        integrity: sha512-QqLF6inIDwiATrfROIyQtwOQxjZuek13WRYZ7donU5wJPLoP67MnYxA6QtqdvdBy2mMqv5m3UefBVdJjvevOYg==,
+      }
+    engines: { node: '>=0.11.0' }
+    requiresBuild: true
+    dependencies:
+      bindings: 1.5.0
+      node-addon-api: 1.7.2
+    dev: true
+
   /debug@4.3.4:
     resolution:
       {
@@ -4524,6 +4612,14 @@ packages:
       reusify: 1.0.4
     dev: true
 
+  /fenceparser@1.1.1:
+    resolution:
+      {
+        integrity: sha512-VdkTsK7GWLT0VWMK5S5WTAPn61wJ98WPFwJiRHumhg4ESNUO/tnkU8bzzzc62o6Uk1SVhuZFLnakmDA4SGV7wA==,
+      }
+    engines: { node: '>=12' }
+    dev: true
+
   /figures@3.2.0:
     resolution:
       {
@@ -4542,6 +4638,13 @@ packages:
     engines: { node: ^10.12.0 || >=12.0.0 }
     dependencies:
       flat-cache: 3.0.4
+    dev: true
+
+  /file-uri-to-path@1.0.0:
+    resolution:
+      {
+        integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==,
+      }
     dev: true
 
   /fill-range@7.0.1:
@@ -6080,6 +6183,14 @@ packages:
       yallist: 4.0.0
     dev: true
 
+  /lz-string@1.5.0:
+    resolution:
+      {
+        integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==,
+      }
+    hasBin: true
+    dev: true
+
   /magic-string@0.30.2:
     resolution:
       {
@@ -6149,6 +6260,19 @@ packages:
       {
         integrity: sha512-zLftSaNrKuYl0kR5zm4gxXjHaOI3FAOEaloKmRA5hijmJZvSjmxcokOLlzycb/HXlUFWzXqpIEoyEMCE4i9MvQ==,
       }
+    dev: true
+
+  /markdown-it-shiki-twoslash@2.1.3(typescript@5.1.6):
+    resolution:
+      {
+        integrity: sha512-xRlpeO0D7vhST8XqqEirFUHQf2HgxxclfPNWhr7Mg7hBy9uBHRv/OiChGTC3LA9bNffLrElbNwTN3rv0K8Ctlw==,
+      }
+    dependencies:
+      deasync: 0.1.28
+      remark-shiki-twoslash: 3.1.3(typescript@5.1.6)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
     dev: true
 
   /markdown-it@13.0.1:
@@ -6391,6 +6515,13 @@ packages:
     resolution:
       {
         integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==,
+      }
+    dev: true
+
+  /node-addon-api@1.7.2:
+    resolution:
+      {
+        integrity: sha512-ibPK3iA+vaY1eEjESkQkM0BbCqFOaZMiXRTtdB0u7b4djtY6JnsjvPdUHVMg6xQt3B8fpTTWHI9A+ADjM9frzg==,
       }
     dev: true
 
@@ -7091,6 +7222,28 @@ packages:
       functions-have-names: 1.2.3
     dev: true
 
+  /remark-shiki-twoslash@3.1.3(typescript@5.1.6):
+    resolution:
+      {
+        integrity: sha512-4e8OH3ySOCw5wUbDcPszokOKjKuebOqlP2WlySvC7ITBOq27BiGsFlq+FNWhxppZ+JzhTWah4gQrnMjX3KDbAQ==,
+      }
+    peerDependencies:
+      typescript: '>3'
+    dependencies:
+      '@types/unist': 2.0.7
+      '@typescript/twoslash': 3.1.0
+      '@typescript/vfs': 1.3.4
+      fenceparser: 1.1.1
+      regenerator-runtime: 0.13.11
+      shiki: 0.10.1
+      shiki-twoslash: 3.1.2(typescript@5.1.6)
+      tslib: 2.1.0
+      typescript: 5.1.6
+      unist-util-visit: 2.0.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /require-directory@2.1.1:
     resolution:
       {
@@ -7395,6 +7548,34 @@ packages:
         integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==,
       }
     engines: { node: '>=8' }
+    dev: true
+
+  /shiki-twoslash@3.1.2(typescript@5.1.6):
+    resolution:
+      {
+        integrity: sha512-JBcRIIizi+exIA/OUhYkV6jtyeZco0ykCkIRd5sgwIt1Pm4pz+maoaRZpm6SkhPwvif4fCA7xOtJOykhpIV64Q==,
+      }
+    peerDependencies:
+      typescript: '>3'
+    dependencies:
+      '@typescript/twoslash': 3.1.0
+      '@typescript/vfs': 1.3.4
+      fenceparser: 1.1.1
+      shiki: 0.10.1
+      typescript: 5.1.6
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /shiki@0.10.1:
+    resolution:
+      {
+        integrity: sha512-VsY7QJVzU51j5o1+DguUd+6vmCmZ5v/6gYu4vyYAhzjuNQU6P/vmSy4uQaOhvje031qQMiW0d2BwgMH52vqMng==,
+      }
+    dependencies:
+      jsonc-parser: 3.2.0
+      vscode-oniguruma: 1.7.0
+      vscode-textmate: 5.2.0
     dev: true
 
   /side-channel@1.0.4:
@@ -8076,6 +8257,13 @@ packages:
       yn: 3.1.1
     dev: true
 
+  /tslib@2.1.0:
+    resolution:
+      {
+        integrity: sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==,
+      }
+    dev: true
+
   /tslib@2.6.1:
     resolution:
       {
@@ -8314,6 +8502,34 @@ packages:
       defu: 6.1.2
       jiti: 1.19.1
       mlly: 1.4.0
+    dev: true
+
+  /unist-util-is@4.1.0:
+    resolution:
+      {
+        integrity: sha512-ZOQSsnce92GrxSqlnEEseX0gi7GH9zTJZ0p9dtu87WRb/37mMPO2Ilx1s/t9vBHrFhbgweUwb+t7cIn5dxPhZg==,
+      }
+    dev: true
+
+  /unist-util-visit-parents@3.1.1:
+    resolution:
+      {
+        integrity: sha512-1KROIZWo6bcMrZEwiH2UrXDyalAa0uqzWCxCJj6lPOvTve2WkfgCytoDTPaMnodXh1WrXOq0haVYHj99ynJlsg==,
+      }
+    dependencies:
+      '@types/unist': 2.0.7
+      unist-util-is: 4.1.0
+    dev: true
+
+  /unist-util-visit@2.0.3:
+    resolution:
+      {
+        integrity: sha512-iJ4/RczbJMkD0712mGktuGpm/U4By4FfDonL7N/9tATGIF4imikjOuagyMY53tnZq3NP6BcmlrHhEKAfGWjh7Q==,
+      }
+    dependencies:
+      '@types/unist': 2.0.7
+      unist-util-is: 4.1.0
+      unist-util-visit-parents: 3.1.1
     dev: true
 
   /universalify@0.1.2:
@@ -8570,6 +8786,20 @@ packages:
       - sugarss
       - supports-color
       - terser
+    dev: true
+
+  /vscode-oniguruma@1.7.0:
+    resolution:
+      {
+        integrity: sha512-L9WMGRfrjOhgHSdOYgCt/yRMsXzLDJSL7BPrOZt73gU0iWO4mpqzqQzOz5srxqTvMBaR0XZTSrVWo4j55Rc6cA==,
+      }
+    dev: true
+
+  /vscode-textmate@5.2.0:
+    resolution:
+      {
+        integrity: sha512-Uw5ooOQxRASHgu6C7GVvUxisKXfSgW4oFlO+aa+PAkgmH89O3CXxEEzNRNtHSqtXFTl0nAC1uYj0GMSH27uwtQ==,
+      }
     dev: true
 
   /vue-demi@0.14.5(vue@3.3.4):

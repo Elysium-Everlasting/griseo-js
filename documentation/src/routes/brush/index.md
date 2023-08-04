@@ -1,6 +1,15 @@
 ---
 title: Brush
-description: a brush to paint beautifully formatted strings 🖌️
+
+next:
+  text: Getting Started
+  link: /brush/0-getting-started
 ---
 
-a brush to paint beautifully formatted strings 🖌️
+# Brush
+
+#### A brush to paint beautifully formatted strings :paintbrush:
+
+<div class="my-4 flex justify-center">
+  <img src="/images/brush.png" height="250" />
+</div>
