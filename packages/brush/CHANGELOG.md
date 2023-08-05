@@ -1,5 +1,13 @@
 # @aponia/chalk
 
+## 1.0.1
+
+### Patch Changes
+
+- 9840e88: simplified README
+- Updated dependencies [9840e88]
+  - @griseo-js/palette@1.0.1
+
 ## 1.0.0
 
 ### Major Changes
