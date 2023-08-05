@@ -85,15 +85,15 @@ importers:
       '@vuepress/plugin-register-components':
         specifier: 2.0.0-beta.66
         version: 2.0.0-beta.66
-      '@vuepress/plugin-toc':
-        specifier: 2.0.0-beta.66
-        version: 2.0.0-beta.66
       ci-info:
         specifier: ^3.8.0
         version: 3.8.0
       markdown-it-shiki-twoslash:
         specifier: ^2.1.3
         version: 2.1.3(typescript@5.1.6)
+      shiki-twoslash:
+        specifier: ^3.1.2
+        version: 3.1.2(typescript@5.1.6)
       stylus:
         specifier: ^0.59.0
         version: 0.59.0
@@ -2813,22 +2813,6 @@ packages:
       '@vuepress/shared': 2.0.0-beta.66
       '@vuepress/utils': 2.0.0-beta.66
       vue: 3.3.4
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - supports-color
-    dev: true
-
-  /@vuepress/plugin-toc@2.0.0-beta.66:
-    resolution:
-      {
-        integrity: sha512-zAGa7nmgBb6L5HSW3GF2jqKyw8CdRa8XBa/cVYMJWzYGc2wWcazqhlNitYRj2+RfTi4bUFqk/bP8U84Y3xP7PQ==,
-      }
-    dependencies:
-      '@vuepress/client': 2.0.0-beta.66
-      '@vuepress/core': 2.0.0-beta.66
-      '@vuepress/utils': 2.0.0-beta.66
-      vue: 3.3.4
-      vue-router: 4.2.4(vue@3.3.4)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - supports-color
