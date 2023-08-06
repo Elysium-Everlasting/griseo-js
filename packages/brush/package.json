@@ -77,7 +77,8 @@
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsup",
-    "test": "vitest"
+    "test": "vitest",
+    "prepublish": "pnpm run build"
   },
   "dependencies": {
     "@griseo-js/palette": "workspace:*",

@@ -77,7 +77,8 @@
   },
   "type": "module",
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "prepublish": "pnpm run build"
   },
   "devDependencies": {
     "tsup": "^7.1.0"
