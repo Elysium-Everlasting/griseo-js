@@ -1,5 +1,11 @@
 # @aponia/chalk
 
+## 1.1.0
+
+### Minor Changes
+
+- 8b5790f: fix: try to build the package before releasing
+
 ## 1.0.0
 
 ### Major Changes
