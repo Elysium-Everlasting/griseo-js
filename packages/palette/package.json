@@ -1,10 +1,10 @@
 {
-  "name": "@griseo-js/palette",
+  "name": "@griseo.js/palette",
   "version": "1.0.0",
   "description": "colors and utilities - an artist palette to paint with 🎨",
   "license": "MIT",
-  "homepage": "https://elysium-everlasting.github.io/griseo-js/palette",
-  "funding": "https://github.com/Elysium-Everlasting/griseo-js",
+  "homepage": "https://elysium-everlasting.github.io/griseo.js/palette",
+  "funding": "https://github.com/Elysium-Everlasting/griseo.js",
   "contributors": [
     {
       "name": "ap0nia",
@@ -14,11 +14,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Elysium-Everlasting/griseo-js.git",
+    "url": "https://github.com/Elysium-Everlasting/griseo.js.git",
     "directory": "packages/palette"
   },
   "bugs": {
-    "url": "https://github.com/Elysium-Everlasting/griseo-js/issues"
+    "url": "https://github.com/Elysium-Everlasting/griseo.js/issues"
   },
   "keywords": [
     "color",

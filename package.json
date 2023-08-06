@@ -1,11 +1,11 @@
 {
-  "name": "@griseo-js/monorepo",
+  "name": "@griseo.js/monorepo",
   "version": "0.0.0",
-  "description": "monorepo for griseo-js - a collection of ui tools",
+  "description": "monorepo for griseo.js - a collection of ui tools",
   "private": true,
   "license": "MIT",
-  "homepage": "https://elysium-everlasting.github.io/griseo-js/",
-  "funding": "https://github.com/Elysium-Everlasting/griseo-js",
+  "homepage": "https://elysium-everlasting.github.io/griseo.js/",
+  "funding": "https://github.com/Elysium-Everlasting/griseo.js",
   "contributors": [
     {
       "name": "ap0nia",
@@ -15,10 +15,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Elysium-Everlasting/griseo-js"
+    "url": "https://github.com/Elysium-Everlasting/griseo.js"
   },
   "bugs": {
-    "url": "https://github.com/Elysium-Everlasting/griseo-js/issues"
+    "url": "https://github.com/Elysium-Everlasting/griseo.js/issues"
   },
   "keywords": [],
   "type": "module",

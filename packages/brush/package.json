@@ -1,10 +1,10 @@
 {
-  "name": "@griseo-js/brush",
+  "name": "@griseo.js/brush",
   "version": "1.0.0",
   "description": "a brush to paint beautifully formatted strings 🖌️",
   "license": "MIT",
-  "homepage": "https://elysium-everlasting.github.io/griseo-js/brush",
-  "funding": "https://github.com/Elysium-Everlasting/griseo-js",
+  "homepage": "https://elysium-everlasting.github.io/griseo.js/brush",
+  "funding": "https://github.com/Elysium-Everlasting/griseo.js",
   "contributors": [
     {
       "name": "ap0nia",
@@ -14,11 +14,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Elysium-Everlasting/griseo-js.git",
+    "url": "https://github.com/Elysium-Everlasting/griseo.js.git",
     "directory": "packages/brush"
   },
   "bugs": {
-    "url": "https://github.com/Elysium-Everlasting/griseo-js/issues"
+    "url": "https://github.com/Elysium-Everlasting/griseo.js/issues"
   },
   "keywords": [
     "colors",
