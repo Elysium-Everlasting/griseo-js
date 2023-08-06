@@ -27,7 +27,8 @@
     "postinstall": "changeset init && husky install",
     "format": "prettier --write --cache .",
     "lint": "eslint --cache .",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "build": "turbo run build"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
@@ -49,6 +50,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
     "prettier": "^3.0.0",
+    "turbo": "^1.10.12",
     "typescript": "^5.1.6",
     "vitest": "^0.33.0"
   },

@@ -81,9 +81,7 @@
     "prepublish": "pnpm run build"
   },
   "dependencies": {
-    "@griseo-js/palette": "workspace:*",
-    "ansi-colors": "^4.1.3",
-    "picocolors": "^1.0.0"
+    "@griseo.js/palette": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^7.1.0",
