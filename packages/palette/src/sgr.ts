@@ -64,14 +64,49 @@ export const SGR_PARAMETERS = {
  * A mapping of modifier names to SGR parameters, i.e. [modifier, modifier-off].
  */
 export const MODIFIER_COLORS = {
+  /**
+   * Reset the current style.
+   */
   reset: [SGR_PARAMETERS.RESET, SGR_PARAMETERS.RESET],
+
+  /**
+   * Make the text bold.
+   */
   bold: [SGR_PARAMETERS.BOLD, SGR_PARAMETERS.BOLD_OFF],
+
+  /**
+   * Make the text have lower opacity.
+   */
   dim: [SGR_PARAMETERS.DIM, SGR_PARAMETERS.BOLD_OFF],
+
+  /**
+   * Make the text italic. __Not widely supported__
+   */
   italic: [SGR_PARAMETERS.ITALIC, SGR_PARAMETERS.ITALIC_OFF],
+
+  /**
+   * Put a horizontal line below the text. __Not widely supported__
+   */
   underline: [SGR_PARAMETERS.UNDERLINE, SGR_PARAMETERS.UNDERLINE_OFF],
+
+  /**
+   * Put a horizontal line above the text. __Not widely supported__
+   */
   overline: [SGR_PARAMETERS.OVERLINE, SGR_PARAMETERS.OVERLINE_OFF],
+
+  /**
+   * Invert background and foreground colors.
+   */
   inverse: [SGR_PARAMETERS.NEGATIVE, SGR_PARAMETERS.NEGATIVE_OFF],
+
+  /**
+   * Print the text but make it invisible.
+   */
   hidden: [SGR_PARAMETERS.CONCEAL, SGR_PARAMETERS.CONCEAL_OFF],
+
+  /**
+   * Puts a horizontal line through the center of the text. __Not widely supported__
+   */
   strikethrough: [SGR_PARAMETERS.STRIKETHROUGH, SGR_PARAMETERS.STRIKETHROUGH_OFF],
 } satisfies ColorMapping
 
@@ -87,7 +122,15 @@ export const FOREGROUND_COLORS = {
   magenta: [SGR_PARAMETERS.FG_MAGENTA, SGR_PARAMETERS.FG_DEFAULT],
   cyan: [SGR_PARAMETERS.FG_CYAN, SGR_PARAMETERS.FG_DEFAULT],
   white: [SGR_PARAMETERS.FG_WHITE, SGR_PARAMETERS.FG_DEFAULT],
+
+  /**
+   * Alias for `blackBright`.
+   */
   gray: [SGR_PARAMETERS.FG_BRIGHT_BLACK, SGR_PARAMETERS.FG_DEFAULT],
+
+  /**
+   * Alias for `blackBright`.
+   */
   grey: [SGR_PARAMETERS.FG_BRIGHT_BLACK, SGR_PARAMETERS.FG_DEFAULT],
 
   blackBright: [SGR_PARAMETERS.FG_BRIGHT_BLACK, SGR_PARAMETERS.FG_DEFAULT],

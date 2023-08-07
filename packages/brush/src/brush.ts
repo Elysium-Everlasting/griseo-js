@@ -18,10 +18,6 @@ export interface Options {
    *
    * @see https://github.com/termstandard/colors
    *
-   * @default
-   * Automatically detected based on the environment,
-   * depending on whether the NodeJS or browser version is used.
-   *
    * Levels:
    * `0` - All colors disabled.
    * `1` - Basic 16 colors support.
@@ -33,6 +29,9 @@ export interface Options {
 
 /**
  * Use a brush to beautifully color your terminal output!
+ *
+ * When chaining, order doesn't matter, and later styles take precedent in case of a conflict.
+ * i.e. `brush.red.yellow.green` is equivalent to `brush.green`.
  */
 export type Brush = BrushState & BrushStroke
 
@@ -53,7 +52,7 @@ type BrushState = {
  *
  * i.e. A string is formatted by applying brush strokes.
  */
-interface BrushStroke extends ColorStrokes, TrueColorStrokes, UtilityStrokes, BrushState {
+export interface BrushStroke extends ColorStrokes, TrueColorStrokes, UtilityStrokes, BrushState {
   /**
    * Like Kleur, invoking a {@link BrushStroke} without any arguments will return the {@link Brush} itself.
    *
@@ -91,7 +90,12 @@ interface BrushStroke extends ColorStrokes, TrueColorStrokes, UtilityStrokes, Br
 /**
  * Brush strokes that apply predefined colors.
  */
-type ColorStrokes = Record<keyof typeof COLORS, BrushStroke>
+type ColorStrokes = {
+  /**
+   * Apparently using this syntax instead of `Record` propagates the JSDoc comments from the original object.
+   */
+  [K in keyof typeof COLORS]: BrushStroke
+}
 
 /**
  * Brush strokes that apply true colors.
@@ -100,11 +104,76 @@ type ColorStrokes = Record<keyof typeof COLORS, BrushStroke>
  * called with the desired color value before generating a {@link BrushStroke}.
  */
 type TrueColorStrokes = {
+  /**
+   * Use RGB values to set text color.
+   *
+   * @example
+   * ```ts
+   * import { brush } from '@griseo.js/brush';
+   * brush.rgb(222, 173, 237);
+   * ```
+   */
   rgb: (...rgb: RgbColor) => BrushStroke
+
+  /**
+   * Use RGB values to set background color.
+   *
+   * @example
+   * ```ts
+   * import { brush } from '@griseo.js/brush';
+   * brush.bgRgb(222, 173, 237);
+   * ```
+   */
   bgRgb: (...rgb: RgbColor) => BrushStroke
+
+  /**
+   * Use HEX value to set background color.
+   *
+   * @param color - Hexadecimal value representing the desired color.
+   *
+   * @example
+   * ```ts
+   * import { brush } from '@griseo.js/brush';
+   * brush.hex('#DEADED');
+   * ```
+   */
   hex: (hex: string) => BrushStroke
+
+  /**
+   * Use HEX value to set text color.
+   *
+   * @param color - Hexadecimal value representing the desired color.
+   *
+   * @example
+   * ```ts
+   * import { brush } from '@griseo.js/brush';
+   * brush.hex('#DEADED');
+   * ```
+   */
   bgHex: (hex: string) => BrushStroke
+
+  /**
+   * Use an [8-bit unsigned number](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit) to set text color.
+   *
+   * @example
+   *
+   * ```ts
+   * import { brush } from '@griseo.js/brush';
+   * brush.ansi256(201);
+   * ```
+   */
   ansi256: (code: number) => BrushStroke
+
+  /**
+   * Use an [8-bit unsigned number](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit) to set background color.
+   *
+   * @example
+   *
+   * ```ts
+   * import { brush } from '@griseo.js/brush';
+   * brush.bgAnsi256(201);
+   * ```
+   */
   bgAnsi256: (code: number) => BrushStroke
 }
 
@@ -114,6 +183,7 @@ type TrueColorStrokes = {
 type UtilityStrokes = {
   /**
    * Only prints the provided text if {@link Brush.level} is greater than 0.
+   * Useful for things that are purely cosmetic.
    */
   visible: BrushStroke
 }
@@ -133,9 +203,9 @@ const levelToColorType: Record<ColorSupportLevel, ColorSupport> = {
 }
 
 /**
- * The types of strokes supported by {@link TrueColorStrokes}.
+ * All color strokes supported by {@link TrueColorStrokes}.
  */
-const trueColorStrokeTypes: (keyof TrueColorStrokes)[] = [
+const trueColorStrokes: (keyof TrueColorStrokes)[] = [
   'rgb',
   'bgRgb',
   'hex',
@@ -145,17 +215,43 @@ const trueColorStrokeTypes: (keyof TrueColorStrokes)[] = [
 ]
 
 /**
+ * Foreground color strokes supported by {@link TrueColorStrokes}.
+ */
+const foregroundTrueColorStrokes: (keyof TrueColorStrokes)[] = ['rgb', 'hex', 'ansi256']
+
+/**
  * Helper function that coerces unknown arguments to a string.
  */
-function argsToString(...args: unknown[]): string {
+function argsToString(args: unknown[]): string {
   return args.length === 1 ? '' + args[0] : args.join(' ')
+}
+
+/**
+ * Coerces a number of unknown arguments to an {@link RgbColor}.
+ * - If a tuple of values, assume that an [r, g, b] tuple was passed.
+ * - If a single value was passed, assume that it's a hex string / number and convert it.
+ */
+function argsToRgb(args: (string | number)[]): RgbColor {
+  const rgb = args.length > 1 ? args : hexToRgb(args[0] ?? '')
+  return rgb as RgbColor
 }
 
 /**
  * Creates a noop function as a base object to define the {@link Brush} properties on.
  */
 function createBrushPrototype(): Brush {
-  return ((...args) => argsToString(...args)) as Brush
+  return ((...args) => argsToString(args)) as Brush
+}
+
+/**
+ * Creates a new function that passes itself as an argument to {@link paint} to apply styles.
+ * Nested instances of {@link BrushStroke} derive properties from the parent, which is applied to {@link paint}.
+ */
+function createBrushStroke(): BrushStroke {
+  const brushStroke = ((...args: unknown[]) => {
+    return args.length ? paint(brushStroke, args) : brushStroke
+  }) as BrushStroke
+  return brushStroke
 }
 
 /**
@@ -164,7 +260,7 @@ function createBrushPrototype(): Brush {
  * A {@link BrushStroke} can invoke this and pass itself as the second argument.
  */
 function paint(brushStroke: BrushStroke, args: unknown[]): string {
-  let input = argsToString(...args)
+  const input = argsToString(args)
 
   if (brushStroke.visibleOn && brushStroke.level <= 0) {
     return ''
@@ -176,9 +272,18 @@ function paint(brushStroke: BrushStroke, args: unknown[]): string {
 
   const { open, close } = brushStroke
 
-  const output =
-    open + (!!~input.indexOf(close) ? input.replaceAll(close, close + open) : input) + close
+  /**
+   * If the input contains a closing tag, we need to close/open the tag to prevent it from being ignored.
+   * @see https://github.com/lukeed/kleur/blob/master/colors.mjs#L19
+   */
+  const text = !!~input.indexOf(close) ? input.replaceAll(close, close + open) : input
 
+  const output = open + text + close
+
+  /**
+   * If the input contains a newline, we need to wrap each line in the open/close tags.
+   * @see https://github.com/doowb/ansi-colors/blob/master/index.js#L34
+   */
   return output.includes('\n') ? output.replaceAll(/\r*\n/g, `${close}$&${open}`) : output
 }
 
@@ -193,8 +298,6 @@ export function _createBrush(options: Options = {}) {
   brush.level = options.level ?? 0
 
   const properties: Record<string, PropertyDescriptor> = {
-    ...createColorPropertyDescriptors(),
-    ...createTrueColorPropertyDescriptors(),
     level: {
       enumerable: true,
       get() {
@@ -209,123 +312,93 @@ export function _createBrush(options: Options = {}) {
       get() {
         const currentThis = this as BrushStroke
 
-        const brushStroke = ((...args: unknown[]) => {
-          return args.length ? paint(brushStroke, args) : brushStroke
-        }) as BrushStroke
+        const brushStroke = createBrushStroke()
 
         brushStroke.open = currentThis.open ?? ''
         brushStroke.close = currentThis.close ?? ''
         brushStroke.visibleOn = true
 
         Object.setPrototypeOf(brushStroke, prototype)
-        Object.defineProperty(this, 'visible', { value: brushStroke })
+        Object.defineProperty(currentThis, 'visible', { value: brushStroke })
 
         return brushStroke
       },
     },
   }
 
-  function createColorPropertyDescriptors(): Record<string, PropertyDescriptor> {
-    const colorPropertyDescriptors = Object.entries(COLORS).reduce(
-      (descriptors, [name, codes]) => {
-        descriptors[name] = {
-          get() {
-            const currentThis = this as BrushStroke
+  Object.entries(COLORS).forEach(([name, codes]) => {
+    properties[name] = {
+      get() {
+        const currentThis = this as BrushStroke
 
-            const brushStroke = ((...args: unknown[]) => {
-              return args.length ? paint(brushStroke, args) : brushStroke
-            }) as BrushStroke
+        const brushStroke = createBrushStroke()
 
-            const open = `\u001b[${codes[0]}m`
-            const close = `\u001b[${codes[1]}m`
+        const open = `\u001b[${codes[0]}m`
+        const close = `\u001b[${codes[1]}m`
 
-            brushStroke.open = currentThis.open ? currentThis.open + open : open
-            brushStroke.close = currentThis.close ? close + currentThis.close : close
-            brushStroke.visibleOn = currentThis.visibleOn
+        brushStroke.open = currentThis.open ? currentThis.open + open : open
+        brushStroke.close = currentThis.close ? close + currentThis.close : close
+        brushStroke.visibleOn = currentThis.visibleOn
 
-            Object.setPrototypeOf(brushStroke, prototype)
-            Object.defineProperty(currentThis, name, { value: brushStroke })
+        Object.setPrototypeOf(brushStroke, prototype)
+        Object.defineProperty(currentThis, name, { value: brushStroke })
 
-            return brushStroke
-          },
-        }
-        return descriptors
+        return brushStroke
       },
-      {} as Record<string, PropertyDescriptor>,
-    )
-    return colorPropertyDescriptors
-  }
+    }
+  })
 
-  function createTrueColorPropertyDescriptors(): Record<string, PropertyDescriptor> {
-    const trueColorPropertyDescriptors = trueColorStrokeTypes.reduce(
-      (descriptors, model) => {
-        /**
-         * Whether the foreground or background color is being set.
-         */
-        const wrapperType =
-          model === 'rgb' || model === 'hex' || model === 'ansi256'
-            ? ('color' as const)
-            : ('bgColor' as const)
+  trueColorStrokes.forEach((model) => {
+    /**
+     * Whether the foreground or background color is being set.
+     */
+    const wrapperType = foregroundTrueColorStrokes.includes(model) ? 'color' : 'bgColor'
 
-        /**
-         * The closing SGR code depends on whether a foreground or background color is being set.
-         */
-        const closeSgr = SGR_PARAMETERS[wrapperType === 'color' ? 'FG_DEFAULT' : 'BG_DEFAULT']
+    /**
+     * The closing SGR code depends on whether a foreground or background color is being set.
+     */
+    const closeSgr = SGR_PARAMETERS[wrapperType === 'color' ? 'FG_DEFAULT' : 'BG_DEFAULT']
 
-        descriptors[model] = {
-          get() {
-            return (...args: any[]) => {
-              const currentThis = this as BrushStroke
+    properties[model] = {
+      get() {
+        return (...args: any[]) => {
+          const currentThis = this as BrushStroke
 
-              /**
-               * Needed for hex and rgb, but not for ansi. TODO: fix this?
-               */
-              const rgb = (args.length > 1 ? args : hexToRgb(args[0])) as RgbColor
+          const colorType = levelToColorType[brush.level]
 
-              const colorType = levelToColorType[brush.level]
+          const brushStroke = createBrushStroke()
 
-              const brushStroke = ((...args: unknown[]) => {
-                return args.length ? paint(brushStroke, args) : brushStroke
-              }) as BrushStroke
+          /**
+           * To obtain the opening ANSI code:
+           * - If ansi or bgAnsi, then forward to the ansi256 wrapper function.
+           * - If hex or rgb, then forward the code or rgb tuple to the wrapper function,
+           *   depending on what arguments the function needs.
+           *
+           * The hex or rgb wrapper function is determined by the current {@link Brush.level}
+           */
+          const open =
+            model === 'ansi256' || model === 'bgAnsi256'
+              ? wrappers[wrapperType].ansi256(args[0])
+              : colorType === 'ansi'
+              ? wrappers[wrapperType].ansi(rgbToAnsi(...argsToRgb(args)))
+              : colorType === 'ansi256'
+              ? wrappers[wrapperType].ansi256(rgbToAnsi256(...argsToRgb(args)))
+              : wrappers[wrapperType].ansi16m(...argsToRgb(args))
 
-              /**
-               * To obtain the opening ANSI code:
-               * - If ansi or bgAnsi, then forward to the ansi256 wrapper function.
-               * - If hex or rgb, then forward the code or rgb tuple to the wrapper function,
-               *   depending on what arguments the function needs.
-               *
-               * The hex or rgb wrapper function is determined by the current {@link Brush.level}
-               */
-              const open =
-                model === 'ansi256' || model === 'bgAnsi256'
-                  ? wrappers[wrapperType].ansi256(args[0])
-                  : colorType === 'ansi'
-                  ? wrappers[wrapperType][colorType](rgbToAnsi(...rgb))
-                  : colorType === 'ansi256'
-                  ? wrappers[wrapperType][colorType](rgbToAnsi256(...rgb))
-                  : wrappers[wrapperType][colorType](...rgb)
+          const close = `\x1b[${closeSgr}m`
 
-              const close = `\x1b[${closeSgr}m`
+          brushStroke.open = currentThis.open ? currentThis.open + open : open
+          brushStroke.close = currentThis.close ? close + currentThis.close : close
+          brushStroke.visibleOn = currentThis.visibleOn
 
-              brushStroke.open = currentThis.open ? currentThis.open + open : open
-              brushStroke.close = currentThis.close ? close + currentThis.close : close
-              brushStroke.visibleOn = currentThis.visibleOn
+          Object.setPrototypeOf(brushStroke, prototype)
+          Object.defineProperty(currentThis, model, { value: brushStroke })
 
-              Object.setPrototypeOf(brushStroke, prototype)
-              Object.defineProperty(currentThis, model, { value: brushStroke })
-
-              return brushStroke
-            }
-          },
+          return brushStroke
         }
-
-        return descriptors
       },
-      {} as Record<string, PropertyDescriptor>,
-    )
-
-    return trueColorPropertyDescriptors
-  }
+    }
+  })
 
   const prototype = Object.defineProperties(createBrushPrototype(), properties)
   Object.setPrototypeOf(brush, prototype)

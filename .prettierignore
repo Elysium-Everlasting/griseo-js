@@ -7,3 +7,7 @@ node_modules/
 
 ## Vitest coverage output. https://vitest.dev/guide/coverage.html
 coverage/
+
+## Vuepress generated files. https://vuepress.vuejs.org/guide/directory-structure.html#generated-files
+**/.vuepress/.temp
+**/.vuepress/.cache

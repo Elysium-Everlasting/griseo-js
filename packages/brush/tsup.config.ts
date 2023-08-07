@@ -6,6 +6,8 @@ export default defineConfig({
     node: 'src/node.ts',
     browser: 'src/browser.ts',
   },
+  bundle: true,
+  noExternal: [/.*/],
   outDir: 'dist',
   format: ['esm', 'cjs'],
   dts: true,

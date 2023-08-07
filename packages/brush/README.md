@@ -1,3 +1,5 @@
+![](../../documentation/static/images/brush.png)
+
 # Brush
 
 ![Release](https://github.com/Elysium-Everlasting/griseo.js/actions/workflows/release.yml/badge.svg)

@@ -62,14 +62,14 @@
   },
   "typesVersions": {
     "*": {
-      "ansi": [
-        "./dist/ansi.d.ts"
+      ".": [
+        "./dist/index.d.ts"
       ],
-      "sgr": [
-        "./dist/sgr.d.ts"
+      "./node": [
+        "./dist/node.d.ts"
       ],
-      "color-support/*": [
-        "./dist/color-support/*.d.ts"
+      "./browser": [
+        "./dist/browser.d.ts"
       ]
     }
   },
