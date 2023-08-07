@@ -10,6 +10,11 @@ export function createBrush(options: Options = {}) {
 }
 
 export const brush = createBrush()
+
 export const brushStderr = createBrush({ level: stderr ? stderr.level : 0 })
 
 export * from './brush.js'
+
+export { stdout as supportsColor, stderr as supportsColorStderr }
+
+export default brush

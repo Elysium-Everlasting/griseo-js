@@ -1,25 +1,28 @@
 <script setup lang="ts">
 const links = [
   {
-    name: 'About', items: [
+    name: 'About',
+    items: [
       { name: 'Company', href: '#' },
       { name: 'Community', href: '#' },
       { name: 'Careers', href: '#' },
-    ]
+    ],
   },
   {
-    name: 'Legal', items: [
+    name: 'Legal',
+    items: [
       { name: 'Privacy', href: '#' },
       { name: 'Terms', href: '#' },
       { name: 'Sitemap', href: '#' },
-    ]
+    ],
   },
   {
-    name: 'Visit', items: [
+    name: 'Visit',
+    items: [
       { name: 'Locations', href: '#' },
       { name: 'Culture', href: '#' },
       { name: 'Contact', href: '#' },
-    ]
+    ],
   },
 ]
 </script>
@@ -38,6 +41,6 @@ const links = [
 </template>
 
 <style scoped lang="stylus">
-  footer
-    border-top 1px solid var(--c-border)
+footer
+  border-top 1px solid var(--c-border)
 </style>

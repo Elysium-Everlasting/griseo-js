@@ -1,6 +1,7 @@
 import process from 'node:process'
 import { describe, test, expect } from 'vitest'
 import { brush, brushStderr, createBrush } from '../src/index.js'
+import { _createBrush } from '../src/brush.js'
 
 brush.level = 3
 brushStderr.level = 3
@@ -118,6 +119,7 @@ describe('chalk', () => {
 
     const chalk3 = createBrush({ level: 3 })
     expect(chalk3.bgHex('#FF0000')('hello')).toBe('\u001B[48;2;255;0;0mhello\u001B[49m')
+    expect(chalk3.bgAnsi256(196)('hello')).toBe('\u001B[48;5;196mhello\u001B[49m')
   })
 
   test("don't emit RGB codes if level is 0", () => {
@@ -139,5 +141,9 @@ describe('chalk', () => {
     expect(brush.apply(brush, ['foo'])).toBe('foo')
     expect(brush.bind(brush, 'foo')()).toBe('foo')
     expect(brush.call(brush, 'foo')).toBe('foo')
+  })
+
+  test('initialize without specified color', () => {
+    _createBrush()
   })
 })
