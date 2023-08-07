@@ -1,5 +1,11 @@
 # @aponia/chalk
 
+## 1.4.2
+
+### Patch Changes
+
+- 635c644: refactor: corrected typos in jsdoc
+
 ## 1.4.1
 
 ### Patch Changes
