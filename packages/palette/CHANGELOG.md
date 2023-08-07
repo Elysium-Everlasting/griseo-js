@@ -1,5 +1,12 @@
 # @griseo-js/easel
 
+## 1.2.0
+
+### Minor Changes
+
+- 99afae1: feat: provide convenience exports
+- 8766a5a: feat: Added more JSDoc documentation
+
 ## 1.1.0
 
 ### Minor Changes
