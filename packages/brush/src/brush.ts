@@ -54,11 +54,11 @@ type BrushState = {
  */
 export interface BrushStroke extends ColorStrokes, TrueColorStrokes, UtilityStrokes, BrushState {
   /**
-   * Like Kleur, invoking a {@link BrushStroke} without any arguments will return the {@link Brush} itself.
+   * Like Kleur, invoking a {@link BrushStroke} without any arguments will return a nested instance.
    *
    * @see https://github.com/lukeed/kleur/tree/master#chained-methods
    */
-  (): Brush
+  (): BrushStroke
 
   /**
    * Invoking a stroke with any number of arguments will return a formatted string.
