@@ -71,24 +71,21 @@ interface BrushStroke extends ColorStrokes, TrueColorStrokes, UtilityStrokes, Br
    *
    * When chaining, this can be multiple escape codes long; otherwise it's just one code.
    */
-  open: string | undefined
+  open: string
 
   /**
    * The closing ANSI escape code for the stroke.
    *
    * When chaining, this can be multiple escape codes long; otherwise it's just one code.
    */
-  close: string | undefined
-}
+  close: string
 
-/**
- * Miscellaneous brush strokes not associated with colors.
- */
-type UtilityStrokes = {
   /**
-   * Only prints the provided text if {@link Brush.level} is greater than 0.
+   * Whether `visible` was toggled at any point in the chain.
+   *
+   * When this flag is on, the input is only displayed if {@link Brush.level} is greater than 0.
    */
-  visible: BrushStroke
+  visibleOn?: boolean
 }
 
 /**
@@ -100,15 +97,25 @@ type ColorStrokes = Record<keyof typeof COLORS, BrushStroke>
  * Brush strokes that apply true colors.
  *
  * These differ from regular {@link ColorStrokes} because they need to be
- * initialized with the desired color to return a {@link BrushStroke}.
+ * called with the desired color value before generating a {@link BrushStroke}.
  */
 type TrueColorStrokes = {
-  rgb(...rgb: RgbColor): BrushStroke
-  bgRgb(...rgb: RgbColor): BrushStroke
-  hex(hex: string): BrushStroke
-  bgHex(hex: string): BrushStroke
-  ansi256(code: number): BrushStroke
-  bgAnsi256(code: number): BrushStroke
+  rgb: (...rgb: RgbColor) => BrushStroke
+  bgRgb: (...rgb: RgbColor) => BrushStroke
+  hex: (hex: string) => BrushStroke
+  bgHex: (hex: string) => BrushStroke
+  ansi256: (code: number) => BrushStroke
+  bgAnsi256: (code: number) => BrushStroke
+}
+
+/**
+ * Miscellaneous brush strokes not associated with colors.
+ */
+type UtilityStrokes = {
+  /**
+   * Only prints the provided text if {@link Brush.level} is greater than 0.
+   */
+  visible: BrushStroke
 }
 
 /**
@@ -138,14 +145,14 @@ const trueColorStrokeTypes: (keyof TrueColorStrokes)[] = [
 ]
 
 /**
- * Helper function to coerce unknown arguments to a string.
+ * Helper function that coerces unknown arguments to a string.
  */
 function argsToString(...args: unknown[]): string {
   return args.length === 1 ? '' + args[0] : args.join(' ')
 }
 
 /**
- * Create a noop function as a base object to define the {@link Brush} properties on.
+ * Creates a noop function as a base object to define the {@link Brush} properties on.
  */
 function createBrushPrototype(): Brush {
   return ((...args) => argsToString(...args)) as Brush
@@ -156,20 +163,21 @@ function createBrushPrototype(): Brush {
  *
  * A {@link BrushStroke} can invoke this and pass itself as the second argument.
  */
-function paint(brush: Brush, stroke: BrushStroke, args: unknown[]): string {
+function paint(brushStroke: BrushStroke, args: unknown[]): string {
   let input = argsToString(...args)
 
-  if (brush.level <= 0 || !input) {
+  if (brushStroke.visibleOn && brushStroke.level <= 0) {
+    return ''
+  }
+
+  if (brushStroke.level <= 0 || !input) {
     return '' + input
   }
 
-  const { open, close } = stroke
+  const { open, close } = brushStroke
 
-  if (close != null && input.includes(close)) {
-    input = input.replaceAll(close, close + open)
-  }
-
-  const output = open + input + close
+  const output =
+    open + (!!~input.indexOf(close) ? input.replaceAll(close, close + open) : input) + close
 
   return output.includes('\n') ? output.replaceAll(/\r*\n/g, `${close}$&${open}`) : output
 }
@@ -203,6 +211,8 @@ export function _createBrush(options: Options = {}) {
           return args.length ? argsToString(...args) : brushStroke
         }) as BrushStroke
 
+        brushStroke.visibleOn = true
+
         Object.setPrototypeOf(brushStroke, prototype)
         Object.defineProperty(this, 'visible', { value: brushStroke })
 
@@ -219,7 +229,7 @@ export function _createBrush(options: Options = {}) {
             const currentThis = this as BrushStroke
 
             const brushStroke = ((...args: unknown[]) => {
-              return args.length ? paint(brush, brushStroke, args) : brushStroke
+              return args.length ? paint(brushStroke, args) : brushStroke
             }) as BrushStroke
 
             const open = `\u001b[${codes[0]}m`
@@ -263,19 +273,18 @@ export function _createBrush(options: Options = {}) {
               const currentThis = this as BrushStroke
 
               /**
-               * Needed for hex and rgb, but not for ansi. TODO: FIXME ?
+               * Needed for hex and rgb, but not for ansi. TODO: fix this?
                */
               const rgb = (args.length > 1 ? args : hexToRgb(args[0])) as RgbColor
 
               const colorType = levelToColorType[brush.level]
 
               const brushStroke = ((...args: unknown[]) => {
-                return args.length ? paint(brush, brushStroke, args) : brushStroke
+                return args.length ? paint(brushStroke, args) : brushStroke
               }) as BrushStroke
 
               /**
                * To obtain the opening ANSI code:
-               *
                * - If ansi or bgAnsi, then forward to the ansi256 wrapper function.
                * - If hex or rgb, then forward the code or rgb tuple to the wrapper function,
                *   depending on what arguments the function needs.
