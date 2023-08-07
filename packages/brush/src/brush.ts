@@ -260,11 +260,11 @@ function createBrushStroke(): BrushStroke {
  * A {@link BrushStroke} can invoke this and pass itself as the second argument.
  */
 function paint(brushStroke: BrushStroke, args: unknown[]): string {
-  const input = argsToString(args)
-
   if (brushStroke.visibleOn && brushStroke.level <= 0) {
     return ''
   }
+
+  const input = argsToString(args)
 
   if (brushStroke.level <= 0 || !input) {
     return '' + input
