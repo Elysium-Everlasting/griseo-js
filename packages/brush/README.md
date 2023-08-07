@@ -27,7 +27,7 @@ npm install @griseo.js/brush
 
 Brush comes with a flexible API where you can use the syntax of your favorite string formatting library!
 
-### Chalk Syntax
+## Chalk Syntax
 
 ```js
 import { brush } from '@griseo.js/brush'
@@ -89,9 +89,11 @@ console.log(brush.green('Hello %s'), name)
 //=> 'Hello Sindre'
 ```
 
-### Kleur Syntax
+<hr />
 
-#### Chained Methods
+## Kleur Syntax
+
+### Chained Methods
 
 ```js
 import { brush } from '@griseo.js/brush'
@@ -103,7 +105,7 @@ console.log(bold().yellow().bgRed().italic('this is a bold yellow italicized mes
 console.log(green().bold().underline('this is a bold green underlined message'))
 ```
 
-#### Nested Methods
+### Nested Methods
 
 ```js
 import { brush } from '@griseo.js/brush'
@@ -113,13 +115,17 @@ console.log(yellow(`foo ${red().bold('red')} bar ${cyan('cyan')} baz`))
 console.log(yellow('foo ' + red().bold('red') + ' bar ' + cyan('cyan') + ' baz'))
 ```
 
-### Picolors Syntax
+<hr />
+
+## Picolors Syntax
 
 ```js
 import { brush } from '@griseo.js/brush'
 
 console.log(brush.green(`How are ${brush.italic(`you`)} doing?`))
 ```
+
+<hr />
 
 ## Chaining API (Chalk Syntax)
 
