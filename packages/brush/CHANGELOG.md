@@ -1,5 +1,11 @@
 # @aponia/chalk
 
+## 1.3.0
+
+### Minor Changes
+
+- ad5e938: refactor: remove dependency
+
 ## 1.2.0
 
 ### Minor Changes
