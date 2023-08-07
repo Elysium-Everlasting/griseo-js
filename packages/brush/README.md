@@ -1,4 +1,6 @@
-![](../../documentation/static/images/brush.png)
+<p align="center">
+  <img src="../../documentation/static/images/brush.png" height="150">
+</p>
 
 # Brush
 
