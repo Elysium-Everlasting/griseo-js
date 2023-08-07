@@ -207,10 +207,14 @@ export function _createBrush(options: Options = {}) {
     visible: {
       enumerable: true,
       get() {
+        const currentThis = this as BrushStroke
+
         const brushStroke = ((...args: unknown[]) => {
-          return args.length ? argsToString(...args) : brushStroke
+          return args.length ? paint(brushStroke, args) : brushStroke
         }) as BrushStroke
 
+        brushStroke.open = currentThis.open ?? ''
+        brushStroke.close = currentThis.close ?? ''
         brushStroke.visibleOn = true
 
         Object.setPrototypeOf(brushStroke, prototype)
@@ -237,6 +241,7 @@ export function _createBrush(options: Options = {}) {
 
             brushStroke.open = currentThis.open ? currentThis.open + open : open
             brushStroke.close = currentThis.close ? close + currentThis.close : close
+            brushStroke.visibleOn = currentThis.visibleOn
 
             Object.setPrototypeOf(brushStroke, prototype)
             Object.defineProperty(currentThis, name, { value: brushStroke })
@@ -304,6 +309,7 @@ export function _createBrush(options: Options = {}) {
 
               brushStroke.open = currentThis.open ? currentThis.open + open : open
               brushStroke.close = currentThis.close ? close + currentThis.close : close
+              brushStroke.visibleOn = currentThis.visibleOn
 
               Object.setPrototypeOf(brushStroke, prototype)
               Object.defineProperty(currentThis, model, { value: brushStroke })
