@@ -1,5 +1,11 @@
 # @aponia/chalk
 
+## 1.4.1
+
+### Patch Changes
+
+- 6d53041: refactor: move input to a different branch
+
 ## 1.4.0
 
 ### Minor Changes
