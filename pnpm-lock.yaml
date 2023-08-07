@@ -111,11 +111,10 @@ importers:
         version: 2.0.0-beta.66(@types/node@20.4.5)(@vuepress/client@2.0.0-beta.66)(stylus@0.59.0)(ts-node@10.9.1)(vue@3.3.4)
 
   packages/brush:
-    dependencies:
+    devDependencies:
       '@griseo.js/palette':
         specifier: workspace:*
         version: link:../palette
-    devDependencies:
       '@types/cli-color':
         specifier: ^2.0.2
         version: 2.0.2
