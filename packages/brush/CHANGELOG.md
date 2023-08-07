@@ -1,5 +1,18 @@
 # @aponia/chalk
 
+## 1.2.0
+
+### Minor Changes
+
+- 99afae1: feat: provide convenience exports
+- 8766a5a: feat: Added more JSDoc documentation
+
+### Patch Changes
+
+- Updated dependencies [99afae1]
+- Updated dependencies [8766a5a]
+  - @griseo.js/palette@1.2.0
+
 ## 1.1.0
 
 ### Minor Changes
