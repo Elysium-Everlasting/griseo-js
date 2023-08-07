@@ -1,5 +1,11 @@
 # @griseo-js/easel
 
+## 1.4.0
+
+### Minor Changes
+
+- 332ae98: chore: test ci/cd again
+
 ## 1.3.0
 
 ### Minor Changes
