@@ -121,23 +121,10 @@ type TrueColorStrokes = {
    * @example
    * ```ts
    * import { brush } from '@griseo.js/brush';
-   * brush.bgRgb(222, 173, 237);
+   * brush.bgRgb(222, 173, 237)('Hello, world!');
    * ```
    */
   bgRgb: (...rgb: RgbColor) => BrushStroke
-
-  /**
-   * Use HEX value to set background color.
-   *
-   * @param color - Hexadecimal value representing the desired color.
-   *
-   * @example
-   * ```ts
-   * import { brush } from '@griseo.js/brush';
-   * brush.hex('#DEADED');
-   * ```
-   */
-  hex: (hex: string) => BrushStroke
 
   /**
    * Use HEX value to set text color.
@@ -147,7 +134,20 @@ type TrueColorStrokes = {
    * @example
    * ```ts
    * import { brush } from '@griseo.js/brush';
-   * brush.hex('#DEADED');
+   * brush.hex('#DEADED')('Hello, world!');
+   * ```
+   */
+  hex: (hex: string) => BrushStroke
+
+  /**
+   * Use HEX value to set background color.
+   *
+   * @param color - Hexadecimal value representing the desired color.
+   *
+   * @example
+   * ```ts
+   * import { brush } from '@griseo.js/brush';
+   * brush.bgHext('#DEADED')('Hello, world!');
    * ```
    */
   bgHex: (hex: string) => BrushStroke
@@ -159,7 +159,7 @@ type TrueColorStrokes = {
    *
    * ```ts
    * import { brush } from '@griseo.js/brush';
-   * brush.ansi256(201);
+   * brush.ansi256(201)('Hello, world!');
    * ```
    */
   ansi256: (code: number) => BrushStroke
@@ -171,7 +171,7 @@ type TrueColorStrokes = {
    *
    * ```ts
    * import { brush } from '@griseo.js/brush';
-   * brush.bgAnsi256(201);
+   * brush.bgAnsi256(201)('Hello, world!');
    * ```
    */
   bgAnsi256: (code: number) => BrushStroke
@@ -299,7 +299,6 @@ export function _createBrush(options: Options = {}) {
 
   const properties: Record<string, PropertyDescriptor> = {
     level: {
-      enumerable: true,
       get() {
         return brush.level
       },
@@ -308,7 +307,6 @@ export function _createBrush(options: Options = {}) {
       },
     },
     visible: {
-      enumerable: true,
       get() {
         const currentThis = this as BrushStroke
 
