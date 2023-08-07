@@ -1,3 +1,5 @@
+import { brush } from './node.js'
+
 export * from './node.js'
 
 export {
@@ -6,3 +8,5 @@ export {
   modifierNames,
   colorNames,
 } from '@griseo.js/palette/sgr'
+
+export default brush
