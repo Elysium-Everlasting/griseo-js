@@ -9,7 +9,7 @@ import * as nanocolors from 'nanocolors'
 import picocolors from 'picocolors'
 import { brush } from '../src/index.js'
 
-describe('complex fixture', () => {
+describe('complex', () => {
   bench('@griseo.js/brush', () => {
     brush.red(
       `a red ${brush.white('red')} red ${brush.red('red')} red ${brush.gray('red')} red ${brush.red(
