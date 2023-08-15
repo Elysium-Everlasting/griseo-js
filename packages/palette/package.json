@@ -81,12 +81,12 @@
     "prepublish": "pnpm run build"
   },
   "devDependencies": {
-    "tsup": "^7.1.0"
+    "tsup": "7.1.0"
   },
   "packageManager": "pnpm@8.6.12",
   "engines": {
-    "pnpm": "^8.0.0",
-    "node": ">=18"
+    "pnpm": "8.6.12",
+    "node": "20.5.1"
   },
   "publishConfig": {
     "access": "public"
