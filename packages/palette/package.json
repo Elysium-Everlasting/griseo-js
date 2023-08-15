@@ -81,7 +81,7 @@
     "prepublish": "pnpm run build"
   },
   "devDependencies": {
-    "tsup": "7.1.0"
+    "tsup": "7.2.0"
   },
   "packageManager": "pnpm@8.6.12",
   "engines": {
