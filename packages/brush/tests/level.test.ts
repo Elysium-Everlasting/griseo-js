@@ -1,4 +1,5 @@
 import { describe, test, expect } from 'vitest'
+
 import { createBrush } from '../src/index.js'
 
 describe('level', () => {

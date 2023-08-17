@@ -1,6 +1,7 @@
-import process from 'node:process'
 import os from 'node:os'
+import process from 'node:process'
 import tty from 'node:tty'
+
 import type { ColorSupport, ColorSupportLevel } from './index.js'
 
 const CI_VENDORS = ['TRAVIS', 'CIRCLECI', 'APPVEYOR', 'GITLAB_CI', 'BUILDKITE', 'DRONE']

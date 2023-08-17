@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+
 import type { SidebarConfigArray } from 'vuepress'
 
 function getStats(file: string): [string, fs.Stats] {

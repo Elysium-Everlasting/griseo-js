@@ -1,4 +1,3 @@
-import { describe, bench } from 'vitest'
 import ansiColors from 'ansi-colors'
 import chalk from 'chalk'
 import cliColor from 'cli-color'
@@ -7,6 +6,8 @@ import kleur from 'kleur'
 import * as kleurColors from 'kleur/colors'
 import * as nanocolors from 'nanocolors'
 import picocolors from 'picocolors'
+import { describe, bench } from 'vitest'
+
 import { brush } from '../src/index.js'
 
 describe('complex', () => {

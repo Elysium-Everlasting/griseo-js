@@ -4,7 +4,7 @@
   "description": "monorepo for griseo.js - a collection of ui tools",
   "private": true,
   "license": "MIT",
-  "homepage": "https://elysium-everlasting.github.io/griseo.js/",
+  "homepage": "https://elysium-everlasting.github.io/griseo.js",
   "funding": "https://github.com/Elysium-Everlasting/griseo.js",
   "contributors": [
     {
@@ -35,9 +35,7 @@
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
     "@commitlint/types": "^17.4.4",
-    "@eslint/js": "^8.47.0",
     "@types/eslint": "^8.44.2",
-    "@types/eslint__js": "^8.42.0",
     "@types/lint-staged": "^13.2.0",
     "@types/node": "^20.5.0",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
@@ -48,7 +46,7 @@
     "devmoji": "^2.3.0",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-import-resolver-typescript": "^3.6.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.0",
     "prettier": "^3.0.0",

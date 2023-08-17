@@ -1,4 +1,5 @@
 import { describe, test, expect } from 'vitest'
+
 import { brush, createBrush } from '../src/index.js'
 
 brush.level = 1

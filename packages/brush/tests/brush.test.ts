@@ -1,7 +1,9 @@
 import process from 'node:process'
+
 import { describe, test, expect } from 'vitest'
-import { brush, brushStderr, createBrush } from '../src/index.js'
+
 import { _createBrush } from '../src/brush.js'
+import { brush, brushStderr, createBrush } from '../src/index.js'
 
 brush.level = 3
 brushStderr.level = 3

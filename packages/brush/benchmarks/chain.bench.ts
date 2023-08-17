@@ -1,6 +1,7 @@
-import { describe, bench } from 'vitest'
 import chalk from 'chalk'
 import kleur from 'kleur'
+import { describe, bench } from 'vitest'
+
 import { brush } from '../src/index.js'
 
 describe('chaining', () => {

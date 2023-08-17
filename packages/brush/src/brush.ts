@@ -1,5 +1,3 @@
-import { COLORS, SGR_PARAMETERS } from '@griseo.js/palette/sgr'
-import type { ColorSupportLevel } from '@griseo.js/palette/color-support'
 import {
   wrappers,
   hexToRgb,
@@ -8,6 +6,8 @@ import {
   type RgbColor,
   type ColorSupport,
 } from '@griseo.js/palette/ansi'
+import type { ColorSupportLevel } from '@griseo.js/palette/color-support'
+import { COLORS, SGR_PARAMETERS } from '@griseo.js/palette/sgr'
 
 /**
  * Brush initialization options.
@@ -231,8 +231,8 @@ function argsToString(args: unknown[]): string {
  * - If a tuple of values, assume that an [r, g, b] tuple was passed.
  * - If a single value was passed, assume that it's a hex string / number and convert it.
  */
-function argsToRgb(args: (string | number)[]): RgbColor {
-  const rgb = args.length > 1 ? args : hexToRgb(args[0] ?? '')
+function argsToRgb(args: unknown[]): RgbColor {
+  const rgb = args.length > 1 ? args : hexToRgb(args[0] ? '' + args[0] : '')
   return rgb as RgbColor
 }
 
@@ -276,7 +276,7 @@ function paint(brushStroke: BrushStroke, args: unknown[]): string {
    * If the input contains a closing tag, we need to close/open the tag to prevent it from being ignored.
    * @see https://github.com/lukeed/kleur/blob/master/colors.mjs#L19
    */
-  const text = !!~input.indexOf(close) ? input.replaceAll(close, close + open) : input
+  const text = ~input.indexOf(close) ? input.replaceAll(close, close + open) : input
 
   const output = open + text + close
 
@@ -359,7 +359,7 @@ export function _createBrush(options: Options = {}) {
 
     properties[model] = {
       get() {
-        return (...args: any[]) => {
+        return (...args: unknown[]) => {
           const currentThis = this as BrushStroke
 
           const colorType = levelToColorType[brush.level]
@@ -376,7 +376,7 @@ export function _createBrush(options: Options = {}) {
            */
           const open =
             model === 'ansi256' || model === 'bgAnsi256'
-              ? wrappers[wrapperType].ansi256(args[0])
+              ? wrappers[wrapperType].ansi256(args[0] as number)
               : colorType === 'ansi'
               ? wrappers[wrapperType].ansi(rgbToAnsi(...argsToRgb(args)))
               : colorType === 'ansi256'

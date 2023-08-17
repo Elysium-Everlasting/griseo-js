@@ -1,4 +1,5 @@
 import { stdout, stderr } from '@griseo.js/palette/color-support/node'
+
 import { _createBrush, type Options } from './brush.js'
 
 /**
