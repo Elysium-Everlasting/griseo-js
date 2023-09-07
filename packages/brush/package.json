@@ -62,14 +62,14 @@
   },
   "typesVersions": {
     "*": {
-      ".": [
-        "./dist/index.d.ts"
+      "": [
+        "dist/index.d.ts"
       ],
-      "./node": [
-        "./dist/node.d.ts"
+      "node": [
+        "dist/node.d.ts"
       ],
-      "./browser": [
-        "./dist/browser.d.ts"
+      "browser": [
+        "dist/browser.d.ts"
       ]
     }
   },

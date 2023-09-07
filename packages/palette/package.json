@@ -65,13 +65,13 @@
   "typesVersions": {
     "*": {
       "ansi": [
-        "./dist/ansi.d.ts"
+        "dist/ansi.d.ts"
       ],
       "sgr": [
-        "./dist/sgr.d.ts"
+        "dist/sgr.d.ts"
       ],
       "color-support/*": [
-        "./dist/color-support/*.d.ts"
+        "dist/color-support/*.d.ts"
       ]
     }
   },
