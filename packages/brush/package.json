@@ -63,13 +63,13 @@
   "typesVersions": {
     "*": {
       "": [
-        "dist/index.d.ts"
+        "./dist/index.d.ts"
       ],
       "node": [
-        "dist/node.d.ts"
+        "./dist/node.d.ts"
       ],
       "browser": [
-        "dist/browser.d.ts"
+        "./dist/browser.d.ts"
       ]
     }
   },
