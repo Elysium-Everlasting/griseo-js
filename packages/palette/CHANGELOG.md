@@ -1,5 +1,11 @@
 # @griseo-js/easel
 
+## 1.4.3
+
+### Patch Changes
+
+- 08ba561: fix: correct types versions export paths
+
 ## 1.4.2
 
 ### Patch Changes
