@@ -19,10 +19,10 @@ export interface Options {
    * @see https://github.com/termstandard/colors
    *
    * Levels:
-   * `0` - All colors disabled.
-   * `1` - Basic 16 colors support.
-   * `2` - ANSI 256 colors support.
-   * `3` - Truecolor 16 million colors support.
+   * 0 - All colors disabled.
+   * 1 - Basic 16 colors support.
+   * 2 - ANSI 256 colors support.
+   * 3 - Truecolor 16 million colors support.
    */
   level?: ColorSupportLevel
 }
@@ -30,7 +30,7 @@ export interface Options {
 /**
  * Use a brush to beautifully color your terminal output!
  *
- * When chaining, order doesn't matter, and later styles take precedent in case of a conflict.
+ * When chaining, order doesn't matter, and later styles have higher priority in case of a conflict.
  * i.e. `brush.red.yellow.green` is equivalent to `brush.green`.
  */
 export type Brush = BrushState & BrushStroke
@@ -42,7 +42,7 @@ type BrushState = {
   /**
    * Indicates the supported range of colors.
    *
-   * @default Inferred based on the terminal environment when using a NodeJS or browser specific brush.
+   * @default Inferred based on the terminal environment when using a Node.js or browser specific brush.
    */
   level: ColorSupportLevel
 }
@@ -91,9 +91,6 @@ export interface BrushStroke extends ColorStrokes, TrueColorStrokes, UtilityStro
  * Brush strokes that apply predefined colors.
  */
 type ColorStrokes = {
-  /**
-   * Apparently using this syntax instead of `Record` propagates the JSDoc comments from the original object.
-   */
   [K in keyof typeof COLORS]: BrushStroke
 }
 
@@ -292,7 +289,7 @@ function paint(brushStroke: BrushStroke, args: unknown[]): string {
  *
  * @internal
  */
-export function _createBrush(options: Options = {}) {
+export function createBrushInternal(options: Options = {}) {
   const brush = createBrushPrototype()
 
   brush.level = options.level ?? 0
@@ -355,7 +352,7 @@ export function _createBrush(options: Options = {}) {
     /**
      * The closing SGR code depends on whether a foreground or background color is being set.
      */
-    const closeSgr = SGR_PARAMETERS[wrapperType === 'color' ? 'FG_DEFAULT' : 'BG_DEFAULT']
+    const closingSgr = SGR_PARAMETERS[wrapperType === 'color' ? 'FG_DEFAULT' : 'BG_DEFAULT']
 
     properties[model] = {
       get() {
@@ -383,7 +380,7 @@ export function _createBrush(options: Options = {}) {
               ? wrappers[wrapperType].ansi256(rgbToAnsi256(...argsToRgb(args)))
               : wrappers[wrapperType].ansi16m(...argsToRgb(args))
 
-          const close = `\x1b[${closeSgr}m`
+          const close = `\x1b[${closingSgr}m`
 
           brushStroke.open = currentThis.open ? currentThis.open + open : open
           brushStroke.close = currentThis.close ? close + currentThis.close : close
