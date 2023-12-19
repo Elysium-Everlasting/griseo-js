@@ -40,26 +40,22 @@
     "./ansi": {
       "types": "./dist/ansi.d.ts",
       "import": "./dist/ansi.js",
-      "require": "./dist/ansi.cjs",
-      "default": "./dist/ansi.js"
+      "require": "./dist/ansi.cjs"
     },
     "./sgr": {
       "types": "./dist/sgr.d.ts",
       "import": "./dist/sgr.js",
-      "require": "./dist/sgr.cjs",
-      "default": "./dist/sgr.js"
+      "require": "./dist/sgr.cjs"
     },
     "./color-support": {
       "types": "./dist/color-support/index.d.ts",
       "import": "./dist/color-support/index.js",
-      "require": "./dist/color-support/index.cjs",
-      "default": "./dist/color-support/index.js"
+      "require": "./dist/color-support/index.cjs"
     },
     "./color-support/*": {
       "types": "./dist/color-support/*.d.ts",
       "import": "./dist/color-support/*.js",
-      "require": "./dist/color-support/*.cjs",
-      "default": "./dist/color-support/*.js"
+      "require": "./dist/color-support/*.cjs"
     }
   },
   "typesVersions": {

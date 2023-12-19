@@ -111,10 +111,11 @@ importers:
         version: 2.0.0-beta.66(@types/node@20.5.0)(@vuepress/client@2.0.0-beta.66)(stylus@0.59.0)(ts-node@10.9.1)(vue@3.3.4)
 
   packages/brush:
-    devDependencies:
+    dependencies:
       '@griseo.js/palette':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../palette
+    devDependencies:
       '@types/cli-color':
         specifier: ^2.0.2
         version: 2.0.2
@@ -4614,7 +4615,7 @@ packages:
       eslint-import-resolver-node: 0.3.9
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.3.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.0)(eslint@8.47.0)
       has: 1.0.3
-      is-core-module: 2.12.1
+      is-core-module: 2.13.0
       is-glob: 4.0.3
       minimatch: 3.1.2
       object.fromentries: 2.0.6
