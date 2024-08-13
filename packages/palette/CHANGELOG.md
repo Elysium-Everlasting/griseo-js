@@ -1,5 +1,11 @@
 # @griseo-js/easel
 
+## 1.4.4
+
+### Patch Changes
+
+- bc38240: fix: broken import statement
+
 ## 1.4.3
 
 ### Patch Changes
