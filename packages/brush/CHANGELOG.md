@@ -1,5 +1,13 @@
 # @aponia/chalk
 
+## 1.4.4
+
+### Patch Changes
+
+- bc38240: fix: broken import statement
+- Updated dependencies [bc38240]
+  - @griseo.js/palette@1.4.4
+
 ## 1.4.3
 
 ### Patch Changes
