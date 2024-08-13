@@ -6,7 +6,7 @@ import {
   type RgbColor,
   type ColorSupport,
 } from '@griseo.js/palette/ansi'
-import type { ColorSupportLevel } from '@griseo.js/palette/color-support'
+import type { ColorSupportLevel } from '@griseo.js/palette/color-support/index'
 import { COLORS, SGR_PARAMETERS } from '@griseo.js/palette/sgr'
 
 /**
